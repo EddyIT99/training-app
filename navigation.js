@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import Home from "./screens/Home";
+import Settings from "./screens/Settings";
+import Statistics from "./screens/Statistics";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,12 +23,18 @@ function BottomTabs() {
           switch (route.name) {
             case "Home":
               iconName = focused ? "home" : "home-outline";
+              break;
             case "Statistics":
               iconName = focused
                 ? "ios-stats-chart"
                 : "ios-stats-chart-outline";
+              break;
             case "Settings":
               iconName = focused ? "settings" : "settings-outline";
+              break;
+            default:
+              iconName = focused ? "home" : "home-outline";
+              break;
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -37,8 +45,8 @@ function BottomTabs() {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Statistics" component={Home} />
-      <Tab.Screen name="Settings" component={Home} />
+      <Tab.Screen name="Statistics" component={Statistics} />
+      <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
 }
