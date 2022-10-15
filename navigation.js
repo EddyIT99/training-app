@@ -8,10 +8,12 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import Statistics from "./screens/Statistics";
+import CreateWorkout from "./screens/CreateWorkout";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// Tab navigation component
 function BottomTabs() {
   return (
     <Tab.Navigator
@@ -51,11 +53,13 @@ function BottomTabs() {
   );
 }
 
+// Stack navigation component
 function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
+        <Stack.Screen name="CreateWorkout" component={CreateWorkout} />
       </Stack.Navigator>
     </NavigationContainer>
   );

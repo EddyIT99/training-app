@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Pressable, Touchale } from "react-native";
+import React, { useEffect, useState } from "react";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <View>
-      <Text>Home</Text>
+      <Pressable onPress={() => navigation.navigate("CreateWorkout")}>
+        <View style={styles.test}>
+          <Text>Create Workout</Text>
+        </View>
+      </Pressable>
     </View>
   );
 };
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  test: {},
+});
