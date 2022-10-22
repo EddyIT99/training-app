@@ -1,15 +1,36 @@
-import { StyleSheet, Text, View, Pressable, Touchale } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { StyleSheet, ScrollView } from "react-native";
 
-const Home = ({ navigation }) => {
+import { useTheme } from "@react-navigation/native";
+
+import HomeScreenButton from "../components/HomeScreenButton";
+
+const Home = () => {
+  const theme = useTheme();
+
   return (
-    <View>
-      <Pressable onPress={() => navigation.navigate("CreateWorkout")}>
-        <View style={styles.test}>
-          <Text>Create Workout</Text>
-        </View>
-      </Pressable>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 10 }}>
+      <HomeScreenButton
+        screen={"CreateWorkout"}
+        text="Statistics"
+        theme={theme}
+      />
+      <HomeScreenButton
+        screen={"CreateWorkout"}
+        text="Create Workout"
+        theme={theme}
+      />
+      <HomeScreenButton
+        screen={"CreateWorkout"}
+        text="Start Workout"
+        theme={theme}
+      />
+      <HomeScreenButton
+        screen={"CreateWorkout"}
+        text="Edit Workout"
+        theme={theme}
+      />
+    </ScrollView>
   );
 };
 
