@@ -10,23 +10,19 @@ const Home = () => {
 
   return (
     <ScrollView contentContainerStyle={{ padding: 10 }}>
-      <HomeScreenButton
-        screen={"CreateWorkout"}
-        text="Statistics"
-        theme={theme}
-      />
+      <HomeScreenButton screen={"Statistics"} text="Statistics" theme={theme} />
       <HomeScreenButton
         screen={"CreateWorkout"}
         text="Create Workout"
         theme={theme}
       />
       <HomeScreenButton
-        screen={"CreateWorkout"}
+        screen={"StartWorkout"}
         text="Start Workout"
         theme={theme}
       />
       <HomeScreenButton
-        screen={"CreateWorkout"}
+        screen={"EditWorkout"}
         text="Edit Workout"
         theme={theme}
       />

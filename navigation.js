@@ -16,6 +16,8 @@ import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import Statistics from "./screens/Statistics";
 import CreateWorkout from "./screens/CreateWorkout";
+import StartWorkout from "./screens/StartWorkout";
+import EditWorkout from "./screens/EditWorkout";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,7 +91,10 @@ function Navigation() {
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
+        <Stack.Screen name="Statistics" component={Statistics} />
         <Stack.Screen name="CreateWorkout" component={CreateWorkout} />
+        <Stack.Screen name="StartWorkout" component={StartWorkout} />
+        <Stack.Screen name="EditWorkout" component={EditWorkout} />
       </Stack.Navigator>
     </NavigationContainer>
   );
