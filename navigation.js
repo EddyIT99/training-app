@@ -1,16 +1,15 @@
 import React from "react";
-import { useColorScheme } from "react-native";
 
 import {
   NavigationContainer,
   DarkTheme,
   DefaultTheme,
-  useTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { StatusBar } from "expo-status-bar";
 
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
@@ -18,6 +17,8 @@ import Statistics from "./screens/Statistics";
 import CreateWorkout from "./screens/CreateWorkout";
 import StartWorkout from "./screens/StartWorkout";
 import EditWorkout from "./screens/EditWorkout";
+
+import { useDarkMode } from "./context/themeContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,7 @@ const CustomDarkTheme = {
     secondary: "#f39c12",
     background: "#222222",
     text: "#F5F5F5",
+    headerColor: "#222222",
   },
 };
 
@@ -39,6 +41,7 @@ const CustomLightTheme = {
     ...DefaultTheme.colors,
     primary: "#d35400",
     secondary: "#f39c12",
+    headerColor: "#ffffff",
   },
 };
 
@@ -83,15 +86,29 @@ function BottomTabs() {
 
 // Stack navigation component
 function Navigation() {
-  const scheme = useColorScheme();
+  const darkMode = useDarkMode().darkMode;
 
   return (
-    <NavigationContainer
-      theme={scheme === "dark" ? CustomDarkTheme : CustomLightTheme}
-    >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
-        <Stack.Screen name="Statistics" component={Statistics} />
+    <NavigationContainer theme={darkMode ? CustomDarkTheme : CustomLightTheme}>
+      <StatusBar
+        style={darkMode ? "dark" : "light"}
+        backgroundColor={
+          darkMode
+            ? CustomDarkTheme.colors.card
+            : CustomLightTheme.colors.headerColor
+        }
+      />
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+        }}
+      >
+        <Stack.Screen
+          name="BottomTabs"
+          component={BottomTabs}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen name="CreateWorkout" component={CreateWorkout} />
         <Stack.Screen name="StartWorkout" component={StartWorkout} />
         <Stack.Screen name="EditWorkout" component={EditWorkout} />

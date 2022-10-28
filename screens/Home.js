@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
 
@@ -7,31 +7,45 @@ import HomeScreenButton from "../components/HomeScreenButton";
 
 const Home = () => {
   const theme = useTheme();
+  const buttonArray = [
+    {
+      screen: "CreateWorkout",
+      text: "Create Workout",
+    },
+    {
+      screen: "StartWorkout",
+      text: "Start Workout",
+    },
+    {
+      screen: "EditWorkout",
+      text: "Edit Workout",
+    },
+  ];
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 10 }}>
-      <HomeScreenButton screen={"Statistics"} text="Statistics" theme={theme} />
-      <HomeScreenButton
-        screen={"CreateWorkout"}
-        text="Create Workout"
-        theme={theme}
-      />
-      <HomeScreenButton
-        screen={"StartWorkout"}
-        text="Start Workout"
-        theme={theme}
-      />
-      <HomeScreenButton
-        screen={"EditWorkout"}
-        text="Edit Workout"
-        theme={theme}
-      />
-    </ScrollView>
+    <View
+      style={{
+        flex: 1,
+        paddingHorizontal: 30,
+        justifyContent: "space-evenly",
+      }}
+    >
+      {buttonArray.map((button, index) => (
+        <HomeScreenButton
+          key={index}
+          screen={button.screen}
+          text={button.text}
+          theme={theme}
+        />
+      ))}
+    </View>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  test: {},
+  wrapper: {
+    flex: 1,
+  },
 });
