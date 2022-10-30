@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
 
-import HomeScreenButton from "../components/HomeScreenButton";
+import HomeScreenButton from "../components/home/HomeScreenButton";
 
 const Home = () => {
   const theme = useTheme();

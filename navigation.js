@@ -91,7 +91,7 @@ function Navigation() {
   return (
     <NavigationContainer theme={darkMode ? CustomDarkTheme : CustomLightTheme}>
       <StatusBar
-        style={darkMode ? "dark" : "light"}
+        style={darkMode ? "light" : "dark"}
         backgroundColor={
           darkMode
             ? CustomDarkTheme.colors.card
