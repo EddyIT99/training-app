@@ -109,9 +109,21 @@ function Navigation() {
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen name="CreateWorkout" component={CreateWorkout} />
-        <Stack.Screen name="StartWorkout" component={StartWorkout} />
-        <Stack.Screen name="EditWorkout" component={EditWorkout} />
+        <Stack.Screen
+          name="CreateWorkout"
+          component={CreateWorkout}
+          options={{ headerTitle: "Create workout" }}
+        />
+        <Stack.Screen
+          name="StartWorkout"
+          component={StartWorkout}
+          options={{ headerTitle: "Start workout" }}
+        />
+        <Stack.Screen
+          name="EditWorkout"
+          component={EditWorkout}
+          options={{ headerTitle: "Edit workout" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
