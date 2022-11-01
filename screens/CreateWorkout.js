@@ -7,11 +7,13 @@ import { useTheme } from "@react-navigation/native";
 
 import Header from "../components/workout/Header";
 import WorkoutCard from "../components/workout/WorkoutCard";
+import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
 import { workouts as data } from "../assets/data";
 
 const CreateWorkout = () => {
   const theme = useTheme();
+  const [visible, setVisible] = useState(false);
   const [displayStyle, setDisplayStyle] = useState(2);
   const [workouts, setWorkouts] = useState(data);
 
@@ -84,6 +86,7 @@ const CreateWorkout = () => {
           radius={50}
           color={theme.colors.primary}
           buttonStyle={{ width: 60, height: 60 }}
+          onPress={() => setVisible(true)}
         />
       </View>
 
@@ -95,6 +98,8 @@ const CreateWorkout = () => {
           buttonStyle={{ width: 60, height: 60 }}
         />
       </View>
+
+      <CreateWorkoutModal visible={visible} setVisible={setVisible} />
     </View>
   );
 };
