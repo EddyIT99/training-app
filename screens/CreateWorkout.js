@@ -99,7 +99,11 @@ const CreateWorkout = () => {
         />
       </View>
 
-      <CreateWorkoutModal visible={visible} setVisible={setVisible} />
+      <CreateWorkoutModal
+        visible={visible}
+        setVisible={setVisible}
+        setWorkouts={setWorkouts}
+      />
     </View>
   );
 };
