@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  NavigationContainer,
-  DarkTheme,
-  DefaultTheme,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -20,30 +16,10 @@ import EditWorkout from "./screens/EditWorkout";
 
 import { useDarkMode } from "./context/themeContext";
 
+import { CustomDarkTheme, CustomLightTheme } from "./assets/globalStyle";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-const CustomDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    primary: "#d35400",
-    secondary: "#f39c12",
-    background: "#222222",
-    text: "#F5F5F5",
-    headerColor: "#222222",
-  },
-};
-
-const CustomLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: "#d35400",
-    secondary: "#f39c12",
-    headerColor: "#ffffff",
-  },
-};
 
 const getTabBarIcon = (route, focused, color, size) => {
   let iconName;

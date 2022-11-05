@@ -16,7 +16,6 @@ const Header = (props) => {
         placeholder={props.placeholder}
         placeholderTextColor={theme.dark ? "#FFFFFF60" : "#00000050"}
         value={title}
-        autoFocus
         onChangeText={(text) => setTitle(text)}
         style={styles.workoutNameInput(theme)}
       />

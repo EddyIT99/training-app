@@ -1,17 +1,41 @@
 import { StyleSheet, TextInput, TouchableOpacity, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Overlay } from "@rneui/base";
 import ImagePicker from "./ImagePicker";
+import { v4 as uuidv4 } from "uuid";
 
 import { useTheme } from "@react-navigation/native";
 
-const CreateWorkoutModal = ({ visible, setVisible, setWorkouts }) => {
+const CreateWorkoutModal = ({
+  visible,
+  setVisible,
+  setWorkouts,
+  workouts,
+  setSnackbarVisible,
+  exerciseName,
+  setExerciseName,
+}) => {
   const theme = useTheme();
   const [image, setImage] = useState(null);
 
+  useEffect(() => {
+    if (visible) setExerciseName("");
+  }, [visible]);
+
   const save = () => {
-    // setWorkouts((prev) => [...prev, {
-    // }])
+    setSnackbarVisible(true);
+    setWorkouts((prev) => [
+      ...prev,
+      {
+        id: uuidv4(),
+        exercise: exerciseName,
+        image: image,
+        sets: 0,
+        reps: 0,
+      },
+    ]);
+    setVisible(false);
+    setImage(null);
   };
 
   return (
@@ -24,9 +48,18 @@ const CreateWorkoutModal = ({ visible, setVisible, setWorkouts }) => {
       <Text style={[styles.saveButtonText, { color: "#000000" }]}>
         Add custom exercise
       </Text>
-      <TextInput style={styles.workoutNameInput(theme)}></TextInput>
       <ImagePicker image={image} setImage={setImage} />
-      <TouchableOpacity style={styles.saveButton} onPress={save}>
+      <TextInput
+        placeholder="Enter exercise name..."
+        value={exerciseName}
+        onChangeText={(text) => setExerciseName(text)}
+        style={styles.workoutNameInput(theme)}
+      />
+      <TouchableOpacity
+        style={styles.saveButton(exerciseName)}
+        onPress={save}
+        disabled={exerciseName === "" ? true : false}
+      >
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
     </Overlay>
@@ -54,16 +87,18 @@ const styles = StyleSheet.create({
       borderRadius: 15,
     };
   },
-  saveButton: {
-    width: 100,
-    height: 50,
-    backgroundColor: "green",
-    borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
+  saveButton: (exerciseName) => {
+    return {
+      width: 100,
+      height: 50,
+      backgroundColor: exerciseName === "" ? "grey" : "green",
+      borderRadius: 15,
+      alignItems: "center",
+      justifyContent: "center",
+    };
   },
   saveButtonText: {
     color: "#FFFFFF",
-    fontSize: 22,
+    fontSize: 30,
   },
 });

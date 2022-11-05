@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 
 import { Button, Icon } from "@rneui/base";
+import { Snackbar } from "react-native-paper";
 
 import { useTheme } from "@react-navigation/native";
 
@@ -14,8 +15,17 @@ import { workouts as data } from "../assets/data";
 const CreateWorkout = () => {
   const theme = useTheme();
   const [visible, setVisible] = useState(false);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [displayStyle, setDisplayStyle] = useState(2);
   const [workouts, setWorkouts] = useState(data);
+  const [exerciseName, setExerciseName] = useState("");
+
+  function deleteExercise(name) {
+    const newArr = data.filter((exercise) => {
+      if (exercise.name !== name) return exercise;
+    });
+    setWorkouts(newArr);
+  }
 
   function increaseAmount(id, type) {
     let newArr = workouts.map((workout) => {
@@ -54,27 +64,37 @@ const CreateWorkout = () => {
         displayStyle={displayStyle}
         setDisplayStyle={setDisplayStyle}
       />
-      <FlatList
-        style={{ marginTop: 10 }}
-        contentContainerStyle={{ marginHorizontal: 20 }}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-        data={workouts}
-        numColumns={displayStyle}
-        key={displayStyle}
-        renderItem={({ item, index }) => (
-          <WorkoutCard
-            key={index}
-            id={item.id}
-            index={index}
-            numColumns={displayStyle}
-            exercise={item.exercise}
-            sets={item.sets}
-            reps={item.reps}
-            increaseAmount={increaseAmount}
-            decreaseAmount={decreaseAmount}
-          />
-        )}
-      />
+      {workouts.length === 0 && (
+        <View
+          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+        >
+          <Text style={{ fontSize: 20 }}>No workouts added</Text>
+        </View>
+      )}
+      {workouts.length > 0 && (
+        <FlatList
+          style={{ marginTop: 10 }}
+          contentContainerStyle={{ marginHorizontal: 20 }}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          data={workouts}
+          numColumns={displayStyle}
+          key={displayStyle}
+          renderItem={({ item, index }) => (
+            <WorkoutCard
+              key={index}
+              id={item.id}
+              index={index}
+              numColumns={displayStyle}
+              exercise={item.exercise}
+              sets={item.sets}
+              reps={item.reps}
+              increaseAmount={increaseAmount}
+              decreaseAmount={decreaseAmount}
+            />
+          )}
+        />
+      )}
+
       <View style={styles.addButtonWrapper}>
         <Text
           style={{ marginBottom: 5, fontSize: 16, color: theme.colors.text }}
@@ -103,7 +123,24 @@ const CreateWorkout = () => {
         visible={visible}
         setVisible={setVisible}
         setWorkouts={setWorkouts}
+        workouts={workouts}
+        setSnackbarVisible={setSnackbarVisible}
+        exerciseName={exerciseName}
+        setExerciseName={setExerciseName}
       />
+
+      <Snackbar
+        style={styles.snackbarStyle}
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={6000}
+        action={{
+          label: "Undo",
+          onPress: () => deleteExercise(exerciseName),
+        }}
+      >
+        Added exercise '{exerciseName}'
+      </Snackbar>
     </View>
   );
 };
@@ -122,5 +159,8 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 20,
     alignItems: "center",
+  },
+  snackbarStyle: {
+    borderRadius: 20,
   },
 });
