@@ -1,5 +1,3 @@
-import "react-native-get-random-values";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navigation from "./navigation";
 import ThemeProvider from "./context/themeContext";

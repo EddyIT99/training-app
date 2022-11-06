@@ -10,52 +10,84 @@ import Header from "../components/workout/Header";
 import WorkoutCard from "../components/workout/WorkoutCard";
 import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
-import { workouts as data } from "../assets/data";
+// import { workouts as data } from "../assets/data";
+import { observer } from "mobx-react";
+
+import store from "../store/store";
 
 const CreateWorkout = () => {
   const theme = useTheme();
   const [visible, setVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [displayStyle, setDisplayStyle] = useState(2);
-  const [workouts, setWorkouts] = useState(data);
+  // const [workouts, setWorkouts] = useState(data);
   const [exerciseName, setExerciseName] = useState("");
 
-  function deleteExercise(name) {
-    const newArr = data.filter((exercise) => {
-      if (exercise.name !== name) return exercise;
-    });
-    setWorkouts(newArr);
+  // function deleteExercise(name) {
+  //   const newArr = data.filter((exercise) => {
+  //     if (exercise.name !== name) return exercise;
+  //   });
+  //   setWorkouts(newArr);
+  // }
+
+  // function increaseAmount(id, type) {
+  //   let newArr = workouts.map((workout) => {
+  //     if (id !== workout.id) return workout;
+  //     switch (type) {
+  //       case "sets":
+  //         return { ...workout, sets: workout.sets + 1 };
+  //       case "reps":
+  //         return { ...workout, reps: workout.reps + 1 };
+  //       default:
+  //         return { ...workout };
+  //     }
+  //   });
+  //   setWorkouts(newArr);
+  // }
+
+  // function decreaseAmount(id, type) {
+  //   let newArr = workouts.map((workout) => {
+  //     if (id !== workout.id) return workout;
+  //     switch (type) {
+  //       case "sets":
+  //         return { ...workout, sets: workout.sets > 0 ? workout.sets - 1 : 0 };
+  //       case "reps":
+  //         return { ...workout, reps: workout.reps > 0 ? workout.reps - 1 : 0 };
+  //       default:
+  //         return { ...workout };
+  //     }
+  //   });
+  //   setWorkouts(newArr);
+  // }
+
+  function renderRow(item) {}
+
+  function ExcerciseList() {
+    return (
+      <FlatList
+        style={{ marginTop: 10 }}
+        contentContainerStyle={{ marginHorizontal: 20 }}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        data={store.excercises.slice()}
+        numColumns={displayStyle}
+        key={displayStyle}
+        renderItem={({ item, index }) => (
+          <WorkoutCard
+            key={item.id}
+            index={index}
+            numColumns={displayStyle}
+            exercise={item.exercise}
+            sets={item.sets}
+            reps={item.reps}
+            // increaseAmount={increaseAmount}
+            // decreaseAmount={decreaseAmount}
+          />
+        )}
+      />
+    );
   }
 
-  function increaseAmount(id, type) {
-    let newArr = workouts.map((workout) => {
-      if (id !== workout.id) return workout;
-      switch (type) {
-        case "sets":
-          return { ...workout, sets: workout.sets + 1 };
-        case "reps":
-          return { ...workout, reps: workout.reps + 1 };
-        default:
-          return { ...workout };
-      }
-    });
-    setWorkouts(newArr);
-  }
-
-  function decreaseAmount(id, type) {
-    let newArr = workouts.map((workout) => {
-      if (id !== workout.id) return workout;
-      switch (type) {
-        case "sets":
-          return { ...workout, sets: workout.sets > 0 ? workout.sets - 1 : 0 };
-        case "reps":
-          return { ...workout, reps: workout.reps > 0 ? workout.reps - 1 : 0 };
-        default:
-          return { ...workout };
-      }
-    });
-    setWorkouts(newArr);
-  }
+  const ExcerciseListObserver = observer(ExcerciseList);
 
   return (
     <View style={{ flex: 1, paddingTop: 10 }}>
@@ -64,36 +96,14 @@ const CreateWorkout = () => {
         displayStyle={displayStyle}
         setDisplayStyle={setDisplayStyle}
       />
-      {workouts.length === 0 && (
+      {store.excercises.length === 0 && (
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
           <Text style={{ fontSize: 20 }}>No workouts added</Text>
         </View>
       )}
-      {workouts.length > 0 && (
-        <FlatList
-          style={{ marginTop: 10 }}
-          contentContainerStyle={{ marginHorizontal: 20 }}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-          data={workouts}
-          numColumns={displayStyle}
-          key={displayStyle}
-          renderItem={({ item, index }) => (
-            <WorkoutCard
-              key={index}
-              id={item.id}
-              index={index}
-              numColumns={displayStyle}
-              exercise={item.exercise}
-              sets={item.sets}
-              reps={item.reps}
-              increaseAmount={increaseAmount}
-              decreaseAmount={decreaseAmount}
-            />
-          )}
-        />
-      )}
+      {store.excercises.length > 0 && <ExcerciseListObserver />}
 
       <View style={styles.addButtonWrapper}>
         <Text
@@ -122,24 +132,23 @@ const CreateWorkout = () => {
       <CreateWorkoutModal
         visible={visible}
         setVisible={setVisible}
-        setWorkouts={setWorkouts}
-        workouts={workouts}
         setSnackbarVisible={setSnackbarVisible}
-        exerciseName={exerciseName}
-        setExerciseName={setExerciseName}
       />
 
       <Snackbar
         style={styles.snackbarStyle}
         visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        duration={6000}
+        onDismiss={() => {
+          setSnackbarVisible(false);
+          store.updateSnackBarText("");
+        }}
+        duration={3000}
         action={{
           label: "Undo",
-          onPress: () => deleteExercise(exerciseName),
+          onPress: () => store.deleteExercise(),
         }}
       >
-        Added exercise '{exerciseName}'
+        Added exercise '{store.snackBarText}'
       </Snackbar>
     </View>
   );

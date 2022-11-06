@@ -1,67 +1,58 @@
 import { StyleSheet, TextInput, TouchableOpacity, Text } from "react-native";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Overlay } from "@rneui/base";
 import ImagePicker from "./ImagePicker";
-import { v4 as uuidv4 } from "uuid";
 
 import { useTheme } from "@react-navigation/native";
 
-const CreateWorkoutModal = ({
-  visible,
-  setVisible,
-  setWorkouts,
-  workouts,
-  setSnackbarVisible,
-  exerciseName,
-  setExerciseName,
-}) => {
-  const theme = useTheme();
-  const [image, setImage] = useState(null);
+import store from "../../store/store";
+import { observer } from "mobx-react";
 
-  useEffect(() => {
-    if (visible) setExerciseName("");
-  }, [visible]);
+const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
+  const theme = useTheme();
 
   const save = () => {
     setSnackbarVisible(true);
-    setWorkouts((prev) => [
-      ...prev,
-      {
-        id: uuidv4(),
-        exercise: exerciseName,
-        image: image,
-        sets: 0,
-        reps: 0,
-      },
-    ]);
+    store.addExcercise();
     setVisible(false);
-    setImage(null);
   };
+
+  function AddExcercise() {
+    return (
+      <>
+        <Text style={styles.headerText}>Add custom exercise</Text>
+        <TextInput
+          placeholder="Enter exercise name..."
+          value={store.newExcerciseName}
+          onChangeText={(text) => store.updateNewExcerciseName(text)}
+          style={styles.workoutNameInput(theme)}
+        />
+        <ImagePicker />
+
+        <TouchableOpacity
+          style={styles.saveButton(store.newExcerciseName)}
+          onPress={save}
+          disabled={store.newExcerciseName === "" ? true : false}
+        >
+          <Text style={styles.saveButtonText}>Save</Text>
+        </TouchableOpacity>
+      </>
+    );
+  }
+
+  const AddExcerciseObserver = observer(AddExcercise);
 
   return (
     <Overlay
       isVisible={visible}
-      onBackdropPress={() => setVisible(false)}
+      onBackdropPress={() => {
+        setVisible(false);
+        store.updateNewExcerciseName("");
+        store.updateImage("");
+      }}
       overlayStyle={styles.overlayStyle}
-      style={styles.testStyle}
     >
-      <Text style={[styles.saveButtonText, { color: "#000000" }]}>
-        Add custom exercise
-      </Text>
-      <ImagePicker image={image} setImage={setImage} />
-      <TextInput
-        placeholder="Enter exercise name..."
-        value={exerciseName}
-        onChangeText={(text) => setExerciseName(text)}
-        style={styles.workoutNameInput(theme)}
-      />
-      <TouchableOpacity
-        style={styles.saveButton(exerciseName)}
-        onPress={save}
-        disabled={exerciseName === "" ? true : false}
-      >
-        <Text style={styles.saveButtonText}>Save</Text>
-      </TouchableOpacity>
+      <AddExcerciseObserver />
     </Overlay>
   );
 };
@@ -70,14 +61,19 @@ export default CreateWorkoutModal;
 
 const styles = StyleSheet.create({
   overlayStyle: {
-    borderRadius: 10,
+    borderRadius: 15,
+    padding: 20,
     width: "70%",
-    height: "60%",
     backgroundColor: "#FFFFFF",
     alignItems: "center",
   },
+  headerText: {
+    fontSize: 30,
+    marginBottom: 20,
+  },
   workoutNameInput: (theme) => {
     return {
+      marginBottom: 20,
       paddingHorizontal: 10,
       height: 50,
       fontSize: 20,
@@ -89,7 +85,8 @@ const styles = StyleSheet.create({
   },
   saveButton: (exerciseName) => {
     return {
-      width: 100,
+      marginTop: 20,
+      width: "100%",
       height: 50,
       backgroundColor: exerciseName === "" ? "grey" : "green",
       borderRadius: 15,
