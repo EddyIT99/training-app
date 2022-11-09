@@ -1,11 +1,19 @@
-import { StyleSheet, TextInput, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { Overlay } from "@rneui/base";
+import {
+  Headline,
+  Subheading,
+  Title,
+  Paragraph,
+  Text,
+  Caption,
+} from "react-native-paper";
 import ImagePicker from "./ImagePicker";
 
 import { useTheme } from "@react-navigation/native";
 
-import store from "../../store/store";
+import store from "../../store/exerciseStore";
 import { observer } from "mobx-react";
 
 const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
@@ -20,7 +28,7 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
   function AddExcercise() {
     return (
       <>
-        <Text style={styles.headerText}>Add custom exercise</Text>
+        <Headline style={styles.headerText}>Add custom exercise</Headline>
         <TextInput
           placeholder="Enter exercise name..."
           value={store.newExcerciseName}
@@ -68,7 +76,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 30,
     marginBottom: 20,
   },
   workoutNameInput: (theme) => {
@@ -96,6 +103,6 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     color: "#FFFFFF",
-    fontSize: 30,
+    fontSize: 20,
   },
 });

@@ -5,34 +5,44 @@ import DisplayModeButton from "./DisplayModeButton";
 
 import { useTheme } from "@react-navigation/native";
 
-const Header = (props) => {
-  const [title, setTitle] = useState("");
+import rootStore from "../../store/rootStore";
 
+import { Observer } from "mobx-react";
+
+const Header = (props) => {
   const theme = useTheme();
 
   return (
-    <View style={styles.wrapper}>
-      <TextInput
-        placeholder={props.placeholder}
-        placeholderTextColor={theme.dark ? "#FFFFFF60" : "#00000050"}
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-        style={styles.workoutNameInput(theme)}
-      />
+    <Observer>
+      {() => (
+        <View style={styles.wrapper}>
+          <TextInput
+            placeholder={props.placeholder}
+            placeholderTextColor={theme.dark ? "#FFFFFF60" : "#00000050"}
+            value={rootStore.workoutStore.workoutName}
+            onChangeText={(text) =>
+              rootStore.workoutStore.updateWorkoutName(text)
+            }
+            style={styles.workoutNameInput(theme)}
+          />
 
-      <View style={{ flexDirection: "row", marginRight: 10 }}>
-        <DisplayModeButton
-          icon={
-            props.displayStyle === 1 ? "view-agenda" : "view-agenda-outline"
-          }
-          onPress={() => props.setDisplayStyle(1)}
-        />
-        <DisplayModeButton
-          icon={props.displayStyle === 2 ? "view-grid" : "view-grid-outline"}
-          onPress={() => props.setDisplayStyle(2)}
-        />
-      </View>
-    </View>
+          <View style={{ flexDirection: "row", marginRight: 10 }}>
+            <DisplayModeButton
+              icon={
+                props.displayStyle === 1 ? "view-agenda" : "view-agenda-outline"
+              }
+              onPress={() => props.setDisplayStyle(1)}
+            />
+            <DisplayModeButton
+              icon={
+                props.displayStyle === 2 ? "view-grid" : "view-grid-outline"
+              }
+              onPress={() => props.setDisplayStyle(2)}
+            />
+          </View>
+        </View>
+      )}
+    </Observer>
   );
 };
 

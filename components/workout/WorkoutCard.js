@@ -2,17 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
+import { Icon } from "@rneui/base";
+import rootStore from "../../store/rootStore";
+import { Headline, Paragraph, Title } from "react-native-paper";
 
-const WorkoutCard = ({
-  id,
-  exercise,
-  sets,
-  reps,
-  index,
-  numColumns,
-  increaseAmount,
-  decreaseAmount,
-}) => {
+const WorkoutCard = ({ id, exercise, sets, reps, index, numColumns }) => {
   const theme = useTheme();
 
   function rightMargin() {
@@ -29,16 +23,18 @@ const WorkoutCard = ({
   return (
     <View style={styles.cardWrapper(theme, rightMargin)}>
       <View style={styles.innerCardWrapper}>
-        <Text style={styles.exerciseTitle(theme)}>{exercise}</Text>
+        <Title style={styles.exerciseTitle(theme)}>{exercise}</Title>
         <View style={numColumns === 2 && { width: "80%" }}>
           <View style={styles.setsAndRepsWrapper}>
             <View>
-              <Text style={styles.setsAndRepsText(theme)}>Sets</Text>
+              <Paragraph style={styles.setsAndRepsText(theme)}>Sets</Paragraph>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", flex: 1 }}>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() => decreaseAmount(id, "sets")}
+                onPress={() =>
+                  rootStore.excerciseStore.decreaseAmount(id, "sets")
+                }
               >
                 <Text style={styles.buttonText(theme)}>-</Text>
               </TouchableOpacity>
@@ -47,18 +43,22 @@ const WorkoutCard = ({
               </View>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() => increaseAmount(id, "sets")}
+                onPress={() =>
+                  rootStore.excerciseStore.increaseAmount(id, "sets")
+                }
               >
                 <Text style={styles.buttonText(theme)}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.setsAndRepsWrapper}>
-            <Text style={styles.setsAndRepsText(theme)}>Reps</Text>
-            <View style={{ flexDirection: "row" }}>
+            <Paragraph style={styles.setsAndRepsText(theme)}>Reps</Paragraph>
+            <View style={{ flexDirection: "row", flex: 1 }}>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() => decreaseAmount(id, "reps")}
+                onPress={() =>
+                  rootStore.excerciseStore.decreaseAmount(id, "reps")
+                }
               >
                 <Text style={styles.buttonText(theme)}>-</Text>
               </TouchableOpacity>
@@ -67,7 +67,9 @@ const WorkoutCard = ({
               </View>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() => increaseAmount(id, "reps")}
+                onPress={() =>
+                  rootStore.excerciseStore.increaseAmount(id, "reps")
+                }
               >
                 <Text style={styles.buttonText(theme)}>+</Text>
               </TouchableOpacity>
@@ -75,6 +77,19 @@ const WorkoutCard = ({
           </View>
         </View>
       </View>
+      <TouchableOpacity
+        style={{
+          backgroundColor: "red",
+          borderBottomEndRadius: 15,
+          borderBottomStartRadius: 15,
+          height: 30,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onPress={() => rootStore.excerciseStore.deleteExercise(id)}
+      >
+        <Icon name="delete-outline" size={25} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -88,6 +103,7 @@ const styles = StyleSheet.create({
       flex: 0.5,
       marginRight: rightMargin(),
       borderRadius: 15,
+      justifyContent: "center",
     };
   },
   innerCardWrapper: {
@@ -100,19 +116,17 @@ const styles = StyleSheet.create({
       color: theme.colors.text,
       fontSize: 20,
       fontWeight: "500",
-      marginVertical: 10,
+      marginBottom: 10,
     };
   },
   setsAndRepsWrapper: {
-    flexDirection: "row",
+    flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 5,
   },
   setsAndRepsText: (theme) => {
     return {
       color: theme.colors.text,
-      fontSize: 16,
     };
   },
   setsAndRepsAmountText: (theme) => {
@@ -120,8 +134,7 @@ const styles = StyleSheet.create({
   },
   button: (theme) => {
     return {
-      width: 40,
-      height: 40,
+      flex: 1,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.dark ? "#FFFFFF30" : "#00000015",
@@ -129,8 +142,7 @@ const styles = StyleSheet.create({
   },
   amount: (theme) => {
     return {
-      width: 35,
-      height: 40,
+      flex: 0.8,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.dark ? "#FFFFFF60" : "#F5F5F5",

@@ -10,84 +10,43 @@ import Header from "../components/workout/Header";
 import WorkoutCard from "../components/workout/WorkoutCard";
 import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
-// import { workouts as data } from "../assets/data";
-import { observer } from "mobx-react";
+import { Observer } from "mobx-react";
 
-import store from "../store/store";
+import rootStore from "../store/rootStore";
 
-const CreateWorkout = () => {
+const CreateWorkout = ({ navigation }) => {
   const theme = useTheme();
   const [visible, setVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [displayStyle, setDisplayStyle] = useState(2);
-  // const [workouts, setWorkouts] = useState(data);
-  const [exerciseName, setExerciseName] = useState("");
-
-  // function deleteExercise(name) {
-  //   const newArr = data.filter((exercise) => {
-  //     if (exercise.name !== name) return exercise;
-  //   });
-  //   setWorkouts(newArr);
-  // }
-
-  // function increaseAmount(id, type) {
-  //   let newArr = workouts.map((workout) => {
-  //     if (id !== workout.id) return workout;
-  //     switch (type) {
-  //       case "sets":
-  //         return { ...workout, sets: workout.sets + 1 };
-  //       case "reps":
-  //         return { ...workout, reps: workout.reps + 1 };
-  //       default:
-  //         return { ...workout };
-  //     }
-  //   });
-  //   setWorkouts(newArr);
-  // }
-
-  // function decreaseAmount(id, type) {
-  //   let newArr = workouts.map((workout) => {
-  //     if (id !== workout.id) return workout;
-  //     switch (type) {
-  //       case "sets":
-  //         return { ...workout, sets: workout.sets > 0 ? workout.sets - 1 : 0 };
-  //       case "reps":
-  //         return { ...workout, reps: workout.reps > 0 ? workout.reps - 1 : 0 };
-  //       default:
-  //         return { ...workout };
-  //     }
-  //   });
-  //   setWorkouts(newArr);
-  // }
-
-  function renderRow(item) {}
 
   function ExcerciseList() {
     return (
-      <FlatList
-        style={{ marginTop: 10 }}
-        contentContainerStyle={{ marginHorizontal: 20 }}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-        data={store.excercises.slice()}
-        numColumns={displayStyle}
-        key={displayStyle}
-        renderItem={({ item, index }) => (
-          <WorkoutCard
-            key={item.id}
-            index={index}
+      <Observer>
+        {() => (
+          <FlatList
+            style={{ marginTop: 10 }}
+            contentContainerStyle={{ marginHorizontal: 20 }}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            data={rootStore.excerciseStore.excercises.slice()}
             numColumns={displayStyle}
-            exercise={item.exercise}
-            sets={item.sets}
-            reps={item.reps}
-            // increaseAmount={increaseAmount}
-            // decreaseAmount={decreaseAmount}
+            key={displayStyle}
+            renderItem={({ item, index }) => (
+              <WorkoutCard
+                id={item.id}
+                key={item.id}
+                index={index}
+                numColumns={displayStyle}
+                exercise={item.exercise}
+                sets={item.sets}
+                reps={item.reps}
+              />
+            )}
           />
         )}
-      />
+      </Observer>
     );
   }
-
-  const ExcerciseListObserver = observer(ExcerciseList);
 
   return (
     <View style={{ flex: 1, paddingTop: 10 }}>
@@ -96,14 +55,14 @@ const CreateWorkout = () => {
         displayStyle={displayStyle}
         setDisplayStyle={setDisplayStyle}
       />
-      {store.excercises.length === 0 && (
+      {rootStore.excerciseStore.excercises.length === 0 && (
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
-          <Text style={{ fontSize: 20 }}>No workouts added</Text>
+          <Text style={{ fontSize: 20 }}>No excercises added</Text>
         </View>
       )}
-      {store.excercises.length > 0 && <ExcerciseListObserver />}
+      {rootStore.excerciseStore.excercises.length > 0 && <ExcerciseList />}
 
       <View style={styles.addButtonWrapper}>
         <Text
@@ -121,12 +80,28 @@ const CreateWorkout = () => {
       </View>
 
       <View style={styles.doneButtonWrapper}>
-        <Button
-          icon={<Icon name="done" />}
-          radius={50}
-          color={"success"}
-          buttonStyle={{ width: 60, height: 60 }}
-        />
+        <Observer>
+          {() => (
+            <Button
+              icon={<Icon name="done" />}
+              radius={50}
+              disabled={
+                rootStore.excerciseStore.excercises.length === 0 ||
+                rootStore.workoutStore.workoutName.length === 0
+                  ? true
+                  : false
+              }
+              color={"success"}
+              buttonStyle={{ width: 60, height: 60 }}
+              onPress={() => {
+                rootStore.workoutStore.addWorkout(
+                  rootStore.excerciseStore.excercises
+                );
+                navigation.navigate("Home");
+              }}
+            />
+          )}
+        </Observer>
       </View>
 
       <CreateWorkoutModal
@@ -138,17 +113,13 @@ const CreateWorkout = () => {
       <Snackbar
         style={styles.snackbarStyle}
         visible={snackbarVisible}
+        duration={2000}
         onDismiss={() => {
           setSnackbarVisible(false);
-          store.updateSnackBarText("");
-        }}
-        duration={3000}
-        action={{
-          label: "Undo",
-          onPress: () => store.deleteExercise(),
+          rootStore.excerciseStore.updateSnackBarText("");
         }}
       >
-        Added exercise '{store.snackBarText}'
+        Added exercise '{rootStore.excerciseStore.snackBarText}'
       </Snackbar>
     </View>
   );
