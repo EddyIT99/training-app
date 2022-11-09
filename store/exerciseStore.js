@@ -1,6 +1,8 @@
 import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
+import { makePersistable, stopPersisting } from "mobx-persist-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function addExcercise(excercises, exerciseName, image) {
   return [
@@ -48,6 +50,7 @@ function decreaseAmount(exercises, id, type) {
 }
 
 class ExerciseStore {
+  defaultExercises = [];
   excercises = [];
   newExcerciseName = "";
   newImage = null;
@@ -55,6 +58,11 @@ class ExerciseStore {
 
   constructor() {
     makeAutoObservable(this);
+    makePersistable(this, {
+      name: "excerciseStore",
+      properties: ["defaultExercises"],
+      storage: AsyncStorage,
+    });
   }
 
   updateNewExcerciseName(text) {
@@ -90,6 +98,14 @@ class ExerciseStore {
 
   decreaseAmount(id, type) {
     this.excercises = decreaseAmount(this.excercises, id, type);
+  }
+
+  deleteAddedExercises() {
+    this.excercises = [];
+  }
+
+  stopStore() {
+    stopPersisting(this);
   }
 }
 

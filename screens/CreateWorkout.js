@@ -97,6 +97,7 @@ const CreateWorkout = ({ navigation }) => {
                 rootStore.workoutStore.addWorkout(
                   rootStore.excerciseStore.excercises
                 );
+                rootStore.excerciseStore.deleteAddedExercises();
                 navigation.navigate("Home");
               }}
             />

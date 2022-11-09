@@ -2,6 +2,8 @@
 import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
+import { makePersistable, stopPersisting } from "mobx-persist-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function addWorkout(workouts, workoutName, excercises) {
   return [
@@ -25,6 +27,11 @@ class WorkoutStore {
 
   constructor() {
     makeAutoObservable(this);
+    makePersistable(this, {
+      name: "WorkoutStore",
+      properties: ["workouts", "workoutHistory"],
+      storage: AsyncStorage,
+    });
   }
 
   addWorkout(excercises) {
@@ -39,6 +46,10 @@ class WorkoutStore {
 
   updateWorkoutName(text) {
     this.workoutName = text;
+  }
+
+  stopStore() {
+    stopPersisting(this);
   }
 }
 
