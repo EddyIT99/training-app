@@ -103,11 +103,6 @@ const CreateWorkout = ({ navigation }) => {
       </Observer>
 
       <View style={styles.addButtonWrapper}>
-        <Text
-          style={{ marginBottom: 5, fontSize: 16, color: theme.colors.text }}
-        >
-          Add exercises
-        </Text>
         <Button
           icon={<Icon name="add" />}
           radius={50}
@@ -171,7 +166,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     alignSelf: "center",
-    alignItems: "center",
   },
   doneButtonWrapper: {
     position: "absolute",
