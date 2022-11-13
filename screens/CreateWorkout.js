@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, View, Text } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  useWindowDimensions,
+  StatusBar,
+} from "react-native";
 
 import { Button, Icon } from "@rneui/base";
 import { Snackbar } from "react-native-paper";
 
+import AnimatedLottieView from "lottie-react-native";
+
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useTheme } from "@react-navigation/native";
 
 import Header from "../components/workout/Header";
@@ -16,53 +26,81 @@ import rootStore from "../store/rootStore";
 
 const CreateWorkout = ({ navigation }) => {
   const theme = useTheme();
+  const headerHeight = useHeaderHeight();
   const [visible, setVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [displayStyle, setDisplayStyle] = useState(2);
 
-  function ExcerciseList() {
-    return (
-      <Observer>
-        {() => (
-          <FlatList
-            style={{ marginTop: 10 }}
-            contentContainerStyle={{ marginHorizontal: 20 }}
-            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-            data={rootStore.excerciseStore.excercises.slice()}
-            numColumns={displayStyle}
-            key={displayStyle}
-            renderItem={({ item, index }) => (
-              <WorkoutCard
-                id={item.id}
-                key={item.id}
-                index={index}
-                numColumns={displayStyle}
-                exercise={item.exercise}
-                sets={item.sets}
-                reps={item.reps}
-              />
-            )}
-          />
-        )}
-      </Observer>
-    );
+  function screenHeight() {
+    let windowHeight = useWindowDimensions().height;
+    return windowHeight - headerHeight - StatusBar.currentHeight;
   }
 
   return (
-    <View style={{ flex: 1, paddingTop: 10 }}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: 10,
+        minHeight: Math.round(screenHeight()),
+      }}
+    >
       <Header
         placeholder="Name workout..."
         displayStyle={displayStyle}
         setDisplayStyle={setDisplayStyle}
       />
-      {rootStore.excerciseStore.excercises.length === 0 && (
-        <View
-          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-        >
-          <Text style={{ fontSize: 20 }}>No excercises added</Text>
-        </View>
-      )}
-      {rootStore.excerciseStore.excercises.length > 0 && <ExcerciseList />}
+      <Observer>
+        {() => (
+          <>
+            {rootStore.excerciseStore.excercises.length === 0 && (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  marginTop: 20,
+                }}
+              >
+                <AnimatedLottieView
+                  autoPlay
+                  style={{ width: "75%" }}
+                  source={require("../assets/lottie-animations/29951-healthy-lifestyle-exercise.json")}
+                />
+                <Text style={{ fontSize: 20 }}>No excercises added</Text>
+              </View>
+            )}
+          </>
+        )}
+      </Observer>
+      <Observer>
+        {() => (
+          <>
+            {rootStore.excerciseStore.excercises.length > 0 && (
+              <FlatList
+                style={{ marginTop: 10 }}
+                contentContainerStyle={{
+                  marginHorizontal: 20,
+                  paddingBottom: 120,
+                }}
+                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+                data={rootStore.excerciseStore.excercises.slice()}
+                numColumns={displayStyle}
+                key={displayStyle}
+                renderItem={({ item, index }) => (
+                  <WorkoutCard
+                    id={item.id}
+                    key={item.id}
+                    index={index}
+                    numColumns={displayStyle}
+                    exercise={item.exercise}
+                    sets={item.sets}
+                    reps={item.reps}
+                  />
+                )}
+              />
+            )}
+          </>
+        )}
+      </Observer>
 
       <View style={styles.addButtonWrapper}>
         <Text
