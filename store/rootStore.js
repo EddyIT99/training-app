@@ -1,15 +1,15 @@
-import workoutStore from "./workoutStore";
-import exerciseStore from "./exerciseStore";
+import workoutStore from "./workoutStore"
+import exerciseStore from "./exerciseStore"
 
 class RootStore {
-  workoutStore;
-  excerciseStore;
+  workoutStore
+  exerciseStore
 
   constructor() {
-    this.workoutStore = workoutStore;
-    this.excerciseStore = exerciseStore;
+    this.workoutStore = workoutStore
+    this.exerciseStore = exerciseStore
   }
 }
 
-const rootStore = new RootStore();
-export default rootStore;
+const rootStore = new RootStore()
+export default rootStore
