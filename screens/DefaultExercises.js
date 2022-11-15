@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import rootStore from "../store/rootStore";
 import exerciseStore from "../store/exerciseStore";
@@ -9,7 +9,19 @@ import WorkoutCard from "../components/workout/WorkoutCard";
 import { Observer } from "mobx-react";
 
 const DefaultExercises = () => {
-  //console.log(exerciseStore.defaultExercises)
+  const data = exerciseStore.defaultExercises.map((exercise) => {
+    return { ...exercise, selected: false };
+  });
+  const [exercises, setExercises] = useState(data);
+
+  function selectExercise(id) {
+    let newExcerciseArr = exercises.map((exercise) => {
+      if (exercise.id !== id) return exercise;
+      else return { ...exercise, selected: !exercise.selected };
+    });
+    setExercises(newExcerciseArr);
+  }
+
   return (
     <Observer>
       {() => (
@@ -18,7 +30,7 @@ const DefaultExercises = () => {
             marginHorizontal: 10,
           }}
           ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-          data={exerciseStore.defaultExercises.slice()}
+          data={exercises}
           numColumns={2}
           key={2}
           renderItem={({ item, index }) => (
@@ -28,6 +40,8 @@ const DefaultExercises = () => {
               numColumns={2}
               onDefaultExerciseScreen={true}
               exercise={item.exercise}
+              selected={item.selected}
+              selectExcercise={selectExercise}
             />
           )}
         />

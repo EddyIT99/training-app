@@ -1,10 +1,10 @@
-import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-import { useTheme } from "@react-navigation/native"
-import { Icon } from "@rneui/base"
-import rootStore from "../../store/rootStore"
-import { Headline, Paragraph, Title } from "react-native-paper"
+import { useTheme } from "@react-navigation/native";
+import { Icon } from "@rneui/base";
+import rootStore from "../../store/rootStore";
+import { Subheading, Paragraph, Title } from "react-native-paper";
 
 const WorkoutCard = ({
   id,
@@ -14,33 +14,44 @@ const WorkoutCard = ({
   index,
   numColumns,
   onDefaultExerciseScreen,
+  selected,
+  selectExcercise,
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   function rightMargin() {
     switch (numColumns) {
       case 1:
-        return 0
+        return 0;
       case 2:
-        return index % 2 !== 0 ? 0 : 10
+        return index % 2 !== 0 ? 0 : 10;
       default:
-        return 0
+        return 0;
     }
   }
 
   if (onDefaultExerciseScreen) {
     return (
       <TouchableOpacity
-        style={styles.cardWrapper(theme, rightMargin)}
+        style={[
+          styles.cardWrapper(theme, rightMargin),
+          {
+            borderWidth: selected ? 2 : 0,
+            borderColor: theme.colors.primary,
+          },
+        ]}
         onPress={() => {
-          console.log(id)
+          selectExcercise(id);
+          rootStore.exerciseStore.selectExcercise(id, exercise, "");
         }}
       >
         <View style={[styles.innerCardWrapper, { height: 140 }]}>
-          <Title style={styles.exerciseTitle(theme)}>{exercise}</Title>
+          <Subheading style={styles.exerciseTitle(theme)}>
+            {exercise}
+          </Subheading>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 
   return (
@@ -114,10 +125,10 @@ const WorkoutCard = ({
         <Icon name="delete-outline" size={25} />
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default WorkoutCard
+export default WorkoutCard;
 
 const styles = StyleSheet.create({
   cardWrapper: (theme, rightMargin) => {
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
       marginRight: rightMargin(),
       borderRadius: 15,
       justifyContent: "center",
-    }
+    };
   },
   innerCardWrapper: {
     width: "100%",
@@ -137,10 +148,10 @@ const styles = StyleSheet.create({
   exerciseTitle: (theme) => {
     return {
       color: theme.colors.text,
-      fontSize: 20,
-      fontWeight: "500",
+      // fontSize: 20,
+      // fontWeight: "500",
       marginBottom: 10,
-    }
+    };
   },
   setsAndRepsWrapper: {
     flex: 1,
@@ -150,10 +161,10 @@ const styles = StyleSheet.create({
   setsAndRepsText: (theme) => {
     return {
       color: theme.colors.text,
-    }
+    };
   },
   setsAndRepsAmountText: (theme) => {
-    return { color: theme.colors.text }
+    return { color: theme.colors.text };
   },
   button: (theme) => {
     return {
@@ -161,7 +172,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.dark ? "#FFFFFF30" : "#00000015",
-    }
+    };
   },
   amount: (theme) => {
     return {
@@ -169,12 +180,12 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.dark ? "#FFFFFF60" : "#F5F5F5",
-    }
+    };
   },
   buttonText: (theme) => {
     return {
       color: theme.colors.text,
       fontSize: 20,
-    }
+    };
   },
-})
+});

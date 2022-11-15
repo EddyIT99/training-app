@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
+
+import { Paragraph } from "react-native-paper";
 
 import ProgressBar from "../components/workout/ProgressBar";
 import DefaultExercises from "./DefaultExercises";
@@ -12,10 +14,10 @@ const CreateWorkout2 = () => {
   const { step, steps, goTo, next, back, currentStepIndex } = useMultistepPage([
     <DefaultExercises />,
     <View style={{ flex: 1 }}>
-      <Text>TESTING</Text>
+      <Paragraph>TESTING</Paragraph>
     </View>,
     <View style={{ flex: 1 }}>
-      <Text>TESTING TEST SETSETSET</Text>
+      <Paragraph>TESTING TEST SETSETSET</Paragraph>
     </View>,
   ]);
 
@@ -39,7 +41,7 @@ const CreateWorkout2 = () => {
           ]}
           onPress={() => back()}
         >
-          <Text>{currentStepIndex != 0 && "Back"}</Text>
+          <Paragraph>{currentStepIndex != 0 && "Back"}</Paragraph>
         </TouchableOpacity>
         <View style={{ width: 10 }}></View>
 
@@ -55,7 +57,9 @@ const CreateWorkout2 = () => {
             currentStepIndex !== steps.length - 1 ? next() : saveWorkout()
           }
         >
-          <Text>{currentStepIndex !== steps.length - 1 ? "Next" : "Save"}</Text>
+          <Paragraph>
+            {currentStepIndex !== steps.length - 1 ? "Next" : "Save"}
+          </Paragraph>
         </TouchableOpacity>
       </View>
     </View>

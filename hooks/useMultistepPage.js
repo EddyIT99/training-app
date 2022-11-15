@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export function useMultistepPage(steps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
