@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, FlatList } from "react-native"
-import React from "react"
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import React from "react";
 
-import rootStore from "../store/rootStore"
-import exerciseStore from "../store/exerciseStore"
+import rootStore from "../store/rootStore";
+import exerciseStore from "../store/exerciseStore";
 
-import WorkoutCard from "../components/workout/WorkoutCard"
+import WorkoutCard from "../components/workout/WorkoutCard";
 
-import { Observer } from "mobx-react"
+import { Observer } from "mobx-react";
 
 const DefaultExercises = () => {
   //console.log(exerciseStore.defaultExercises)
@@ -16,7 +16,6 @@ const DefaultExercises = () => {
         <FlatList
           contentContainerStyle={{
             marginHorizontal: 10,
-            paddingBottom: 120,
           }}
           ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           data={exerciseStore.defaultExercises.slice()}
@@ -34,9 +33,9 @@ const DefaultExercises = () => {
         />
       )}
     </Observer>
-  )
-}
+  );
+};
 
-export default DefaultExercises
+export default DefaultExercises;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

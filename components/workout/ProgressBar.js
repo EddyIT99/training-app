@@ -1,32 +1,29 @@
-import { StyleSheet, View } from "react-native"
-import React from "react"
-import { Button } from "@rneui/base"
+import { Dimensions, StyleSheet, View, Pressable, Text } from "react-native";
+import React from "react";
 
 const ProgressBar = ({ goTo, currentStepIndex }) => {
   return (
     <View style={styles.progressBar}>
-      <Button
-        color={"#333333"}
-        buttonStyle={styles.progressButton}
-        radius={50}
+      <Pressable
+        style={styles.progressButton("#333333")}
         onPress={() => goTo(0)}
       >
-        1
-      </Button>
+        <Text style={{ color: "#FFFFFF" }}>0</Text>
+      </Pressable>
       <View
         style={[
           styles.line,
           { backgroundColor: currentStepIndex >= 1 ? "#333333" : "#00000050" },
         ]}
       ></View>
-      <Button
-        color={currentStepIndex >= 1 ? "#333333" : "#00000050"}
-        buttonStyle={styles.progressButton}
-        radius={50}
+      <Pressable
+        style={styles.progressButton(
+          currentStepIndex >= 1 ? "#333333" : "#00000050"
+        )}
         onPress={() => goTo(1)}
       >
-        2
-      </Button>
+        <Text style={{ color: "#FFFFFF" }}>1</Text>
+      </Pressable>
       <View
         style={[
           styles.line,
@@ -35,33 +32,40 @@ const ProgressBar = ({ goTo, currentStepIndex }) => {
           },
         ]}
       ></View>
-      <Button
-        color={currentStepIndex === 2 ? "#333333" : "#00000050"}
-        buttonStyle={styles.progressButton}
-        radius={50}
+      <Pressable
+        style={styles.progressButton(
+          currentStepIndex >= 2 ? "#333333" : "#00000050"
+        )}
         onPress={() => goTo(2)}
       >
-        3
-      </Button>
+        <Text style={{ color: "#FFFFFF" }}>2</Text>
+      </Pressable>
     </View>
-  )
-}
+  );
+};
 
-export default ProgressBar
+export default ProgressBar;
 
 const styles = StyleSheet.create({
   progressBar: {
+    height: Dimensions.get("window").height / 10,
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
-  progressButton: {
-    width: 60,
-    height: 60,
+  progressButton: (bgColor) => {
+    return {
+      alignItems: "center",
+      justifyContent: "center",
+      width: "14%",
+      height: "100%",
+      borderRadius: 50,
+      backgroundColor: bgColor,
+    };
   },
   line: {
-    marginTop: 30,
-    width: 80,
+    width: "15%",
     height: 4,
   },
-})
+});
