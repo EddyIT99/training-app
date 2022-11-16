@@ -36,8 +36,8 @@ const WorkoutCard = ({
         style={[
           styles.cardWrapper(theme, rightMargin),
           {
-            borderWidth: selected ? 2 : 0,
-            borderColor: theme.colors.primary,
+            borderWidth: 2,
+            borderColor: selected ? theme.colors.primary : "#00000020",
             borderRadius: 5,
           },
         ]}

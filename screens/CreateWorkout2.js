@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import { Divider, Paragraph } from "react-native-paper";
 
@@ -9,10 +9,26 @@ import DefaultExercises from "./DefaultExercises";
 import { useMultistepPage } from "../hooks/useMultistepPage";
 import { useTheme } from "@react-navigation/native";
 
-const CreateWorkout2 = () => {
+import exerciseStore from "../store/exerciseStore";
+
+const CreateWorkout2 = ({ navigation }) => {
   const theme = useTheme();
+
+  const data = exerciseStore.defaultExercises.map((exercise) => {
+    return { ...exercise, sets: 0, reps: 0, selected: false };
+  });
+  const [exercises, setExercises] = useState(data);
+
+  function selectExercise(id) {
+    let newExcerciseArr = exercises.map((exercise) => {
+      if (exercise.id !== id) return exercise;
+      else return { ...exercise, selected: !exercise.selected };
+    });
+    setExercises(newExcerciseArr);
+  }
+
   const { step, steps, goTo, next, back, currentStepIndex } = useMultistepPage([
-    <DefaultExercises />,
+    <DefaultExercises exercises={exercises} selectExercise={selectExercise} />,
     <View style={{ flex: 1 }}>
       <Paragraph>TESTING</Paragraph>
     </View>,
@@ -25,6 +41,10 @@ const CreateWorkout2 = () => {
     console.log("Save Workout");
   }
 
+  function cancel() {
+    navigation.navigate("Home");
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <ProgressBar currentStepIndex={currentStepIndex} goTo={goTo} />
@@ -33,17 +53,15 @@ const CreateWorkout2 = () => {
       <Divider style={{ height: 1 }} />
       <View style={styles.footer}>
         <TouchableOpacity
-          disabled={currentStepIndex === 0}
           style={[
             styles.buttonStyle,
             {
-              borderColor:
-                currentStepIndex != 0 ? theme.colors.primary : "transparent",
+              borderColor: theme.colors.primary,
             },
           ]}
-          onPress={() => back()}
+          onPress={() => (currentStepIndex !== 0 ? back() : cancel())}
         >
-          <Paragraph>{currentStepIndex != 0 && "Back"}</Paragraph>
+          <Paragraph>{currentStepIndex !== 0 ? "Back" : "Cancel"}</Paragraph>
         </TouchableOpacity>
         <View style={{ width: 10 }}></View>
 
