@@ -1,16 +1,13 @@
-import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navigation from "./navigation";
 import ThemeProvider from "./context/themeContext";
 import { useEffect } from "react";
 import workoutStore from "./store/workoutStore";
-import exerciseStore from "./store/exerciseStore";
 
 // App Navigation Component
 export default function App() {
   useEffect(() => {
     return () => {
-      exerciseStore.stopStore();
       workoutStore.stopStore();
     };
   }, []);

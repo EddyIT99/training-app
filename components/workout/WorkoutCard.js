@@ -110,9 +110,9 @@ const WorkoutCard = ({
 
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() =>
-                  rootStore.exerciseStore.increaseAmount(id, "reps")
-                }
+                onPress={() => {
+                  rootStore.exerciseStore.increaseAmount(id, "reps");
+                }}
               >
                 <Paragraph style={styles.buttonText(theme)}>+</Paragraph>
               </TouchableOpacity>

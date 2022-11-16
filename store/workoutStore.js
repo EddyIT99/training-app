@@ -2,7 +2,11 @@
 import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
-import { makePersistable, stopPersisting } from "mobx-persist-store";
+import {
+  makePersistable,
+  stopPersisting,
+  clearPersistedStore,
+} from "mobx-persist-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function addWorkout(workouts, workoutName, exercises) {
@@ -23,7 +27,6 @@ function deleteWorkout(workouts, workoutId) {
 class WorkoutStore {
   workouts = [];
   workoutHistory = [];
-  workoutName = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -34,18 +37,13 @@ class WorkoutStore {
     });
   }
 
-  addWorkout(exercises) {
-    this.workouts = addWorkout(this.workouts, this.workoutName, exercises);
-    this.workoutName = "";
+  addWorkout(workoutName, exercises) {
+    this.workouts = addWorkout(this.workouts, workoutName, exercises);
     console.log(this.workouts);
   }
 
   deleteWorkout(workoutId) {
     this.workouts = deleteWorkout(this.workouts, workoutId);
-  }
-
-  updateWorkoutName(text) {
-    this.workoutName = text;
   }
 
   stopStore() {
