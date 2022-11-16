@@ -48,24 +48,24 @@ export default ProgressBar;
 
 const styles = StyleSheet.create({
   progressBar: {
-    height: Dimensions.get("window").height / 10,
+    height: 60,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 10,
+    marginVertical: 10,
   },
   progressButton: (bgColor) => {
     return {
       alignItems: "center",
       justifyContent: "center",
-      width: "14%",
+      width: 60,
       height: "100%",
       borderRadius: 50,
       backgroundColor: bgColor,
     };
   },
   line: {
-    width: "15%",
+    width: Dimensions.get("screen").width / 6,
     height: 4,
   },
 });

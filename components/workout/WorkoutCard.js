@@ -24,7 +24,7 @@ const WorkoutCard = ({
       case 1:
         return 0;
       case 2:
-        return index % 2 !== 0 ? 0 : 10;
+        return index % 2 !== 0 ? 0 : 5;
       default:
         return 0;
     }
@@ -38,6 +38,7 @@ const WorkoutCard = ({
           {
             borderWidth: selected ? 2 : 0,
             borderColor: theme.colors.primary,
+            borderRadius: 5,
           },
         ]}
         onPress={() => {

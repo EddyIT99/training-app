@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-import { Paragraph } from "react-native-paper";
+import { Divider, Paragraph } from "react-native-paper";
 
 import ProgressBar from "../components/workout/ProgressBar";
 import DefaultExercises from "./DefaultExercises";
@@ -28,7 +28,9 @@ const CreateWorkout2 = () => {
   return (
     <View style={{ flex: 1 }}>
       <ProgressBar currentStepIndex={currentStepIndex} goTo={goTo} />
+      <Divider style={{ height: 1 }} />
       {step}
+      <Divider style={{ height: 1 }} />
       <View style={styles.footer}>
         <TouchableOpacity
           disabled={currentStepIndex === 0}

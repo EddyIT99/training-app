@@ -28,8 +28,9 @@ const DefaultExercises = () => {
         <FlatList
           contentContainerStyle={{
             marginHorizontal: 10,
+            paddingVertical: 10,
           }}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
           data={exercises}
           numColumns={2}
           key={2}
