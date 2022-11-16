@@ -13,7 +13,7 @@ import Statistics from "./screens/Statistics";
 import CreateWorkout2 from "./screens/CreateWorkout2";
 import StartWorkout from "./screens/StartWorkout";
 import EditWorkout from "./screens/EditWorkout";
-import DefaultExercises from "./screens/DefaultExercises";
+import DefaultExercises from "./components/workout/DefaultExercises";
 
 import { useDarkMode } from "./context/themeContext";
 
@@ -94,7 +94,7 @@ function Navigation() {
         <Stack.Screen
           name="DefaultExercises"
           component={DefaultExercises}
-          options={{ headerTitle: "Choose excercises" }}
+          options={{ headerTitle: "Choose exercises" }}
         />
         <Stack.Screen
           name="StartWorkout"

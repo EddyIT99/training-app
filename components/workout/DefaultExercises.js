@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { Headline } from "react-native-paper";
 
-import WorkoutCard from "../components/workout/WorkoutCard";
+import WorkoutCard from "./WorkoutCard";
 
 import { Observer } from "mobx-react";
 
@@ -37,7 +37,7 @@ const DefaultExercises = ({ exercises, selectExercise }) => {
                 onDefaultExerciseScreen={true}
                 exercise={item.exercise}
                 selected={item.selected}
-                selectExcercise={selectExercise}
+                selectExercise={selectExercise}
               />
             )}
           />

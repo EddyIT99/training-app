@@ -1,13 +1,11 @@
 import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
-import { makePersistable, stopPersisting } from "mobx-persist-store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { defaultData } from "../assets/defaultData";
 
-function addExcercise(excercises, exerciseName, image) {
+function addExercise(exercises, exerciseName, image) {
   return [
-    ...excercises,
+    ...exercises,
     {
       id: uuidv4(),
       exercise: exerciseName,
@@ -52,8 +50,8 @@ function decreaseAmount(exercises, id, type) {
 
 class ExerciseStore {
   defaultExercises = [];
-  excercises = [];
-  newExcerciseName = "";
+  exercises = [];
+  newExerciseName = "";
   newImage = null;
   snackBarText = "";
 
@@ -62,8 +60,8 @@ class ExerciseStore {
     makeAutoObservable(this);
   }
 
-  updateNewExcerciseName(text) {
-    this.newExcerciseName = text;
+  updateNewExerciseName(text) {
+    this.newExerciseName = text;
   }
 
   updateSnackBarText(name) {
@@ -74,23 +72,21 @@ class ExerciseStore {
     this.newImage = image;
   }
 
-  addExcercise() {
-    this.excercises = addExcercise(
-      this.excercises,
-      this.newExcerciseName,
+  addExercise() {
+    this.exercises = addExercise(
+      this.exercises,
+      this.newExerciseName,
       this.newImage
     );
-    this.snackBarText = this.newExcerciseName;
-    this.newExcerciseName = "";
+    this.snackBarText = this.newExerciseName;
+    this.newExerciseName = "";
     this.newImage = null;
   }
 
-  selectExcercise(exerciseId, exerciseName, image) {
-    const found = this.excercises.find(
-      (exercise) => exercise.id === exerciseId
-    );
+  selectExercise(exerciseId, exerciseName, image) {
+    const found = this.exercises.find((exercise) => exercise.id === exerciseId);
     if (!found) {
-      this.excercises.push({
+      this.exercises.push({
         id: exerciseId,
         exercise: exerciseName,
         image: image,
@@ -98,29 +94,25 @@ class ExerciseStore {
         reps: 0,
       });
     } else {
-      this.excercises = deleteExercise(this.excercises, exerciseId);
+      this.exercises = deleteExercise(this.exercises, exerciseId);
     }
-    console.log(this.excercises);
+    console.log(this.exercises);
   }
 
   deleteExercise(id) {
-    this.excercises = deleteExercise(this.excercises, id);
+    this.exercises = deleteExercise(this.exercises, id);
   }
 
   increaseAmount(id, type) {
-    this.excercises = increaseAmount(this.excercises, id, type);
+    this.exercises = increaseAmount(this.exercises, id, type);
   }
 
   decreaseAmount(id, type) {
-    this.excercises = decreaseAmount(this.excercises, id, type);
+    this.exercises = decreaseAmount(this.exercises, id, type);
   }
 
   deleteAddedExercises() {
-    this.excercises = [];
-  }
-
-  stopStore() {
-    stopPersisting(this);
+    this.exercises = [];
   }
 }
 

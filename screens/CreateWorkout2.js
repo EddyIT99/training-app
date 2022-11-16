@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { Divider, Paragraph } from "react-native-paper";
 
 import ProgressBar from "../components/workout/ProgressBar";
-import DefaultExercises from "./DefaultExercises";
+import DefaultExercises from "../components/workout/DefaultExercises";
 
 import { useMultistepPage } from "../hooks/useMultistepPage";
 import { useTheme } from "@react-navigation/native";
 
 import exerciseStore from "../store/exerciseStore";
+import UpdateExercises from "../components/workout/UpdateExercises";
 
 const CreateWorkout2 = ({ navigation }) => {
   const theme = useTheme();
@@ -20,21 +21,17 @@ const CreateWorkout2 = ({ navigation }) => {
   const [exercises, setExercises] = useState(data);
 
   function selectExercise(id) {
-    let newExcerciseArr = exercises.map((exercise) => {
+    let newExerciseArr = exercises.map((exercise) => {
       if (exercise.id !== id) return exercise;
       else return { ...exercise, selected: !exercise.selected };
     });
-    setExercises(newExcerciseArr);
+    setExercises(newExerciseArr);
   }
 
   const { step, steps, goTo, next, back, currentStepIndex } = useMultistepPage([
     <DefaultExercises exercises={exercises} selectExercise={selectExercise} />,
-    <View style={{ flex: 1 }}>
-      <Paragraph>TESTING</Paragraph>
-    </View>,
-    <View style={{ flex: 1 }}>
-      <Paragraph>TESTING TEST SETSETSET</Paragraph>
-    </View>,
+    <UpdateExercises selectExercise={selectExercise} />,
+    ,
   ]);
 
   function saveWorkout() {

@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import { makePersistable, stopPersisting } from "mobx-persist-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function addWorkout(workouts, workoutName, excercises) {
+function addWorkout(workouts, workoutName, exercises) {
   return [
     ...workouts,
     {
       id: uuidv4(),
       name: workoutName,
-      exercises: excercises,
+      exercises: exercises,
     },
   ];
 }
@@ -34,8 +34,8 @@ class WorkoutStore {
     });
   }
 
-  addWorkout(excercises) {
-    this.workouts = addWorkout(this.workouts, this.workoutName, excercises);
+  addWorkout(exercises) {
+    this.workouts = addWorkout(this.workouts, this.workoutName, exercises);
     this.workoutName = "";
     console.log(this.workouts);
   }

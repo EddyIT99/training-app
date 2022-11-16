@@ -21,26 +21,26 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
 
   const save = () => {
     setSnackbarVisible(true);
-    store.addExcercise();
+    store.addExercise();
     setVisible(false);
   };
 
-  function AddExcercise() {
+  function AddExercise() {
     return (
       <>
         <Headline style={styles.headerText}>Add custom exercise</Headline>
         <TextInput
           placeholder="Enter exercise name..."
-          value={store.newExcerciseName}
-          onChangeText={(text) => store.updateNewExcerciseName(text)}
+          value={store.newExerciseName}
+          onChangeText={(text) => store.updateNewExerciseName(text)}
           style={styles.workoutNameInput(theme)}
         />
         <ImagePicker />
 
         <TouchableOpacity
-          style={styles.saveButton(store.newExcerciseName)}
+          style={styles.saveButton(store.newExerciseName)}
           onPress={save}
-          disabled={store.newExcerciseName === "" ? true : false}
+          disabled={store.newExerciseName === "" ? true : false}
         >
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
@@ -48,19 +48,19 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
     );
   }
 
-  const AddExcerciseObserver = observer(AddExcercise);
+  const AddExerciseObserver = observer(AddExercise);
 
   return (
     <Overlay
       isVisible={visible}
       onBackdropPress={() => {
         setVisible(false);
-        store.updateNewExcerciseName("");
+        store.updateNewExerciseName("");
         store.updateImage("");
       }}
       overlayStyle={styles.overlayStyle}
     >
-      <AddExcerciseObserver />
+      <AddExerciseObserver />
     </Overlay>
   );
 };

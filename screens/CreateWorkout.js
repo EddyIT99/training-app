@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -6,34 +6,34 @@ import {
   Text,
   useWindowDimensions,
   StatusBar,
-} from "react-native"
+} from "react-native";
 
-import { Button, Icon } from "@rneui/base"
-import { Snackbar } from "react-native-paper"
+import { Button, Icon } from "@rneui/base";
+import { Snackbar } from "react-native-paper";
 
-import AnimatedLottieView from "lottie-react-native"
+import AnimatedLottieView from "lottie-react-native";
 
-import { useHeaderHeight } from "@react-navigation/elements"
-import { useTheme } from "@react-navigation/native"
+import { useHeaderHeight } from "@react-navigation/elements";
+import { useTheme } from "@react-navigation/native";
 
-import Header from "../components/workout/Header"
-import WorkoutCard from "../components/workout/WorkoutCard"
-import CreateWorkoutModal from "../components/workout/CreateWorkoutModal"
+import Header from "../components/workout/Header";
+import WorkoutCard from "../components/workout/WorkoutCard";
+import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
-import { Observer } from "mobx-react"
+import { Observer } from "mobx-react";
 
-import rootStore from "../store/rootStore"
+import rootStore from "../store/rootStore";
 
 const CreateWorkout = ({ navigation }) => {
-  const theme = useTheme()
-  const headerHeight = useHeaderHeight()
-  const [visible, setVisible] = useState(false)
-  const [snackbarVisible, setSnackbarVisible] = useState(false)
-  const [displayStyle, setDisplayStyle] = useState(2)
+  const theme = useTheme();
+  const headerHeight = useHeaderHeight();
+  const [visible, setVisible] = useState(false);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [displayStyle, setDisplayStyle] = useState(2);
 
   function screenHeight() {
-    let windowHeight = useWindowDimensions().height
-    return windowHeight - headerHeight - StatusBar.currentHeight
+    let windowHeight = useWindowDimensions().height;
+    return windowHeight - headerHeight - StatusBar.currentHeight;
   }
 
   return (
@@ -52,7 +52,7 @@ const CreateWorkout = ({ navigation }) => {
       <Observer>
         {() => (
           <>
-            {rootStore.excerciseStore.excercises.length === 0 && (
+            {rootStore.exerciseStore.exercises.length === 0 && (
               <View
                 style={{
                   flex: 1,
@@ -65,7 +65,7 @@ const CreateWorkout = ({ navigation }) => {
                   style={{ width: "75%" }}
                   source={require("../assets/lottie-animations/29951-healthy-lifestyle-exercise.json")}
                 />
-                <Text style={{ fontSize: 20 }}>No excercises added</Text>
+                <Text style={{ fontSize: 20 }}>No exercises added</Text>
               </View>
             )}
           </>
@@ -74,7 +74,7 @@ const CreateWorkout = ({ navigation }) => {
       <Observer>
         {() => (
           <>
-            {rootStore.excerciseStore.excercises.length > 0 && (
+            {rootStore.exerciseStore.exercises.length > 0 && (
               <FlatList
                 style={{ marginTop: 10 }}
                 contentContainerStyle={{
@@ -82,7 +82,7 @@ const CreateWorkout = ({ navigation }) => {
                   paddingBottom: 120,
                 }}
                 ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-                data={rootStore.excerciseStore.excercises.slice()}
+                data={rootStore.exerciseStore.exercises.slice()}
                 numColumns={displayStyle}
                 key={displayStyle}
                 renderItem={({ item, index }) => (
@@ -127,7 +127,7 @@ const CreateWorkout = ({ navigation }) => {
               icon={<Icon name="done" />}
               radius={50}
               disabled={
-                rootStore.excerciseStore.excercises.length === 0 ||
+                rootStore.exerciseStore.exercises.length === 0 ||
                 rootStore.workoutStore.workoutName.length === 0
                   ? true
                   : false
@@ -136,10 +136,10 @@ const CreateWorkout = ({ navigation }) => {
               buttonStyle={{ width: 60, height: 60 }}
               onPress={() => {
                 rootStore.workoutStore.addWorkout(
-                  rootStore.excerciseStore.excercises
-                )
-                rootStore.excerciseStore.deleteAddedExercises()
-                navigation.navigate("Home")
+                  rootStore.exerciseStore.exercises
+                );
+                rootStore.exerciseStore.deleteAddedExercises();
+                navigation.navigate("Home");
               }}
             />
           )}
@@ -157,17 +157,17 @@ const CreateWorkout = ({ navigation }) => {
         visible={snackbarVisible}
         duration={2000}
         onDismiss={() => {
-          setSnackbarVisible(false)
-          rootStore.excerciseStore.updateSnackBarText("")
+          setSnackbarVisible(false);
+          rootStore.exerciseStore.updateSnackBarText("");
         }}
       >
-        Added exercise '{rootStore.excerciseStore.snackBarText}'
+        Added exercise '{rootStore.exerciseStore.snackBarText}'
       </Snackbar>
     </View>
-  )
-}
+  );
+};
 
-export default CreateWorkout
+export default CreateWorkout;
 
 const styles = StyleSheet.create({
   addButtonWrapper: {
@@ -184,4 +184,4 @@ const styles = StyleSheet.create({
   snackbarStyle: {
     borderRadius: 20,
   },
-})
+});

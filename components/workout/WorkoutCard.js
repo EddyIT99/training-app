@@ -1,10 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 
 import { useTheme } from "@react-navigation/native";
 import { Icon } from "@rneui/base";
 import rootStore from "../../store/rootStore";
-import { Subheading, Paragraph, Title } from "react-native-paper";
+import { Subheading, Paragraph, Title, Headline } from "react-native-paper";
 
 const WorkoutCard = ({
   id,
@@ -15,7 +21,7 @@ const WorkoutCard = ({
   numColumns,
   onDefaultExerciseScreen,
   selected,
-  selectExcercise,
+  selectExercise,
 }) => {
   const theme = useTheme();
 
@@ -34,19 +40,17 @@ const WorkoutCard = ({
     return (
       <TouchableOpacity
         style={[
-          styles.cardWrapper(theme, rightMargin),
+          styles.defaultCardWrapper(theme, rightMargin),
           {
-            borderWidth: 2,
             borderColor: selected ? theme.colors.primary : "#00000020",
-            borderRadius: 5,
           },
         ]}
         onPress={() => {
-          selectExcercise(id);
-          rootStore.exerciseStore.selectExcercise(id, exercise, "");
+          selectExercise(id);
+          rootStore.exerciseStore.selectExercise(id, exercise, "");
         }}
       >
-        <View style={[styles.innerCardWrapper, { height: 140 }]}>
+        <View style={[styles.innerCardWrapper]}>
           <Subheading style={styles.exerciseTitle(theme)}>
             {exercise}
           </Subheading>
@@ -58,73 +62,72 @@ const WorkoutCard = ({
   return (
     <View style={styles.cardWrapper(theme, rightMargin)}>
       <View style={styles.innerCardWrapper}>
-        <Title style={styles.exerciseTitle(theme)}>{exercise}</Title>
-        <View style={numColumns === 2 && { width: "80%" }}>
-          <View style={styles.setsAndRepsWrapper}>
-            <View>
-              <Paragraph style={styles.setsAndRepsText(theme)}>Sets</Paragraph>
+        <Subheading style={styles.exerciseTitle(theme)}>{exercise}</Subheading>
+        <View style={styles.setsAndRepsWrapper}>
+          <View style={styles.innerInnerCardWrapper}>
+            <View style={styles.setsAndRepsText(theme)}>
+              <Paragraph>Sets</Paragraph>
             </View>
-            <View style={{ flexDirection: "row", flex: 1 }}>
+            <View style={styles.setsAndRepsAmount}>
               <TouchableOpacity
                 style={styles.button(theme)}
                 onPress={() =>
-                  rootStore.excerciseStore.decreaseAmount(id, "sets")
+                  rootStore.exerciseStore.decreaseAmount(id, "sets")
                 }
               >
-                <Text style={styles.buttonText(theme)}>-</Text>
+                <Paragraph style={styles.buttonText(theme)}>-</Paragraph>
               </TouchableOpacity>
               <View style={styles.amount(theme)}>
-                <Text style={styles.setsAndRepsAmountText(theme)}>{sets}</Text>
+                <Paragraph>{sets}</Paragraph>
               </View>
               <TouchableOpacity
                 style={styles.button(theme)}
                 onPress={() =>
-                  rootStore.excerciseStore.increaseAmount(id, "sets")
+                  rootStore.exerciseStore.increaseAmount(id, "sets")
                 }
               >
-                <Text style={styles.buttonText(theme)}>+</Text>
+                <Paragraph style={styles.buttonText(theme)}>+</Paragraph>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.setsAndRepsWrapper}>
-            <Paragraph style={styles.setsAndRepsText(theme)}>Reps</Paragraph>
-            <View style={{ flexDirection: "row", flex: 1 }}>
+          <View style={styles.innerInnerCardWrapper}>
+            <View style={styles.setsAndRepsText(theme)}>
+              <Paragraph>Reps</Paragraph>
+            </View>
+            <View style={styles.setsAndRepsAmount}>
               <TouchableOpacity
                 style={styles.button(theme)}
                 onPress={() =>
-                  rootStore.excerciseStore.decreaseAmount(id, "reps")
+                  rootStore.exerciseStore.decreaseAmount(id, "reps")
                 }
               >
-                <Text style={styles.buttonText(theme)}>-</Text>
+                <Paragraph style={styles.buttonText(theme)}>-</Paragraph>
               </TouchableOpacity>
+
               <View style={styles.amount(theme)}>
-                <Text style={styles.setsAndRepsAmountText(theme)}>{reps}</Text>
+                <Paragraph>{reps}</Paragraph>
               </View>
+
               <TouchableOpacity
                 style={styles.button(theme)}
                 onPress={() =>
-                  rootStore.excerciseStore.increaseAmount(id, "reps")
+                  rootStore.exerciseStore.increaseAmount(id, "reps")
                 }
               >
-                <Text style={styles.buttonText(theme)}>+</Text>
+                <Paragraph style={styles.buttonText(theme)}>+</Paragraph>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </View>
-      <TouchableOpacity
+      <Icon
+        name="delete-outline"
+        size={30}
         style={{
-          backgroundColor: "red",
-          borderBottomEndRadius: 15,
-          borderBottomStartRadius: 15,
-          height: 30,
-          alignItems: "center",
-          justifyContent: "center",
+          marginBottom: 10,
         }}
         onPress={() => rootStore.excerciseStore.deleteExercise(id)}
-      >
-        <Icon name="delete-outline" size={25} />
-      </TouchableOpacity>
+      />
     </View>
   );
 };
@@ -132,61 +135,83 @@ const WorkoutCard = ({
 export default WorkoutCard;
 
 const styles = StyleSheet.create({
+  defaultCardWrapper: (theme, rightMargin) => {
+    return {
+      backgroundColor: theme.dark ? "#FFFFFF20" : "#00000020",
+      height: 150,
+      flex: 0.5,
+      marginRight: rightMargin(),
+      borderWidth: 2,
+      borderColor: "#00000020",
+      borderRadius: 5,
+      justifyContent: "center",
+    };
+  },
   cardWrapper: (theme, rightMargin) => {
     return {
       backgroundColor: theme.dark ? "#FFFFFF20" : "#00000020",
       flex: 0.5,
       marginRight: rightMargin(),
-      borderRadius: 15,
+      borderWidth: 2,
+      borderColor: "#00000020",
+      borderRadius: 5,
       justifyContent: "center",
     };
   },
   innerCardWrapper: {
-    width: "100%",
-    padding: 10,
-    alignItems: "center",
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
   exerciseTitle: (theme) => {
     return {
       color: theme.colors.text,
-      // fontSize: 20,
-      // fontWeight: "500",
       marginBottom: 10,
+      alignItems: "center",
+      justifyContent: "center",
     };
   },
   setsAndRepsWrapper: {
     flex: 1,
+  },
+  innerInnerCardWrapper: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    height: 50,
   },
   setsAndRepsText: (theme) => {
     return {
       color: theme.colors.text,
+      width: 40,
     };
   },
-  setsAndRepsAmountText: (theme) => {
-    return { color: theme.colors.text };
+  setsAndRepsAmount: {
+    flex: 1,
+    height: 40,
+    flexDirection: "row",
+    alignItems: "center",
   },
   button: (theme) => {
     return {
-      flex: 1,
+      backgroundColor: theme.dark ? "#FFFFFF30" : "#00000015",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: theme.dark ? "#FFFFFF30" : "#00000015",
+      height: "100%",
+      width: 40,
     };
   },
   amount: (theme) => {
     return {
-      flex: 0.8,
+      backgroundColor: theme.dark ? "#FFFFFF60" : "#F5F5F5",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: theme.dark ? "#FFFFFF60" : "#F5F5F5",
+      height: "100%",
+      width: 40,
     };
   },
   buttonText: (theme) => {
     return {
       color: theme.colors.text,
-      fontSize: 20,
     };
   },
 });
