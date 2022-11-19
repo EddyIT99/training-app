@@ -9,7 +9,7 @@ const ProgressBar = ({ goTo, currentStepIndex }) => {
           style={styles.progressButton("#333333")}
           onPress={() => goTo(0)}
         >
-          <Text style={{ color: "#FFFFFF" }}>0</Text>
+          <Text style={{ color: "#FFFFFF" }}>1</Text>
         </Pressable>
         <View
           style={[
@@ -25,7 +25,7 @@ const ProgressBar = ({ goTo, currentStepIndex }) => {
           )}
           onPress={() => goTo(1)}
         >
-          <Text style={{ color: "#FFFFFF" }}>1</Text>
+          <Text style={{ color: "#FFFFFF" }}>2</Text>
         </Pressable>
         <View
           style={[
@@ -41,7 +41,7 @@ const ProgressBar = ({ goTo, currentStepIndex }) => {
           )}
           onPress={() => goTo(2)}
         >
-          <Text style={{ color: "#FFFFFF" }}>2</Text>
+          <Text style={{ color: "#FFFFFF" }}>3</Text>
         </Pressable>
       </View>
     </>

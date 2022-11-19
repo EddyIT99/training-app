@@ -7,7 +7,7 @@ import { Observer } from "mobx-react";
 
 import WorkoutCard from "./WorkoutCard";
 
-import rootStore from "../../store/rootStore";
+import exerciseStore from "../../store/exerciseStore";
 
 const UpdateExercises = ({ selectExercise }) => {
   return (
@@ -21,7 +21,7 @@ const UpdateExercises = ({ selectExercise }) => {
       >
         <Headline>Enter sets/reps</Headline>
       </View>
-      {rootStore.exerciseStore.exercises.length === 0 && (
+      {exerciseStore.exercises.length === 0 && (
         <Observer>
           {() => (
             <View
@@ -41,7 +41,7 @@ const UpdateExercises = ({ selectExercise }) => {
           )}
         </Observer>
       )}
-      {rootStore.exerciseStore.exercises.length > 0 && (
+      {exerciseStore.exercises.length > 0 && (
         <Observer>
           {() => (
             <FlatList
@@ -50,7 +50,7 @@ const UpdateExercises = ({ selectExercise }) => {
                 paddingBottom: 10,
               }}
               ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-              data={rootStore.exerciseStore.exercises.slice()}
+              data={exerciseStore.exercises.slice()}
               numColumns={2}
               renderItem={({ item, index }) => (
                 <WorkoutCard

@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import Statistics from "./screens/Statistics";
-import CreateWorkout2 from "./screens/CreateWorkout2";
+import CreateWorkout from "./screens/CreateWorkout";
 import StartWorkout from "./screens/StartWorkout";
 import EditWorkout from "./screens/EditWorkout";
 import DefaultExercises from "./components/workout/DefaultExercises";
@@ -87,8 +87,8 @@ function Navigation() {
         />
 
         <Stack.Screen
-          name="CreateWorkout2"
-          component={CreateWorkout2}
+          name="CreateWorkout"
+          component={CreateWorkout}
           options={{ headerShown: false }}
         />
         <Stack.Screen

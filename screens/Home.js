@@ -1,15 +1,15 @@
-import React from "react"
-import { StyleSheet, View } from "react-native"
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
-import { useTheme } from "@react-navigation/native"
+import { useTheme } from "@react-navigation/native";
 
-import HomeScreenButton from "../components/home/HomeScreenButton"
+import HomeScreenButton from "../components/home/HomeScreenButton";
 
 const Home = () => {
-  const theme = useTheme()
+  const theme = useTheme();
   const buttonArray = [
     {
-      screen: "CreateWorkout2",
+      screen: "CreateWorkout",
       text: "Create Workout",
     },
     {
@@ -20,7 +20,7 @@ const Home = () => {
       screen: "EditWorkout",
       text: "Edit Workout",
     },
-  ]
+  ];
 
   return (
     <View
@@ -39,13 +39,13 @@ const Home = () => {
         />
       ))}
     </View>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-})
+});

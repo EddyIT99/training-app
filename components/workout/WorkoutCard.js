@@ -1,16 +1,10 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
 import { Icon } from "@rneui/base";
-import rootStore from "../../store/rootStore";
-import { Subheading, Paragraph, Title, Headline } from "react-native-paper";
+import exerciseStore from "../../store/exerciseStore";
+import { Subheading, Paragraph } from "react-native-paper";
 
 const WorkoutCard = ({
   id,
@@ -47,7 +41,7 @@ const WorkoutCard = ({
         ]}
         onPress={() => {
           selectExercise(id);
-          rootStore.exerciseStore.selectExercise(id, exercise, "");
+          exerciseStore.selectExercise(id, exercise, "");
         }}
       >
         <View style={[styles.innerCardWrapper]}>
@@ -71,9 +65,7 @@ const WorkoutCard = ({
             <View style={styles.setsAndRepsAmount}>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() =>
-                  rootStore.exerciseStore.decreaseAmount(id, "sets")
-                }
+                onPress={() => exerciseStore.decreaseAmount(id, "sets")}
               >
                 <Paragraph style={styles.buttonText(theme)}>-</Paragraph>
               </TouchableOpacity>
@@ -82,9 +74,7 @@ const WorkoutCard = ({
               </View>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() =>
-                  rootStore.exerciseStore.increaseAmount(id, "sets")
-                }
+                onPress={() => exerciseStore.increaseAmount(id, "sets")}
               >
                 <Paragraph style={styles.buttonText(theme)}>+</Paragraph>
               </TouchableOpacity>
@@ -97,9 +87,7 @@ const WorkoutCard = ({
             <View style={styles.setsAndRepsAmount}>
               <TouchableOpacity
                 style={styles.button(theme)}
-                onPress={() =>
-                  rootStore.exerciseStore.decreaseAmount(id, "reps")
-                }
+                onPress={() => exerciseStore.decreaseAmount(id, "reps")}
               >
                 <Paragraph style={styles.buttonText(theme)}>-</Paragraph>
               </TouchableOpacity>
@@ -111,7 +99,7 @@ const WorkoutCard = ({
               <TouchableOpacity
                 style={styles.button(theme)}
                 onPress={() => {
-                  rootStore.exerciseStore.increaseAmount(id, "reps");
+                  exerciseStore.increaseAmount(id, "reps");
                 }}
               >
                 <Paragraph style={styles.buttonText(theme)}>+</Paragraph>
@@ -126,7 +114,7 @@ const WorkoutCard = ({
         style={{
           marginBottom: 10,
         }}
-        onPress={() => rootStore.excerciseStore.deleteExercise(id)}
+        onPress={() => exerciseStore.deleteExercise(id)}
       />
     </View>
   );

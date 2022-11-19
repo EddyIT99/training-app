@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Observer } from "mobx-react";
-import rootStore from "../store/rootStore";
+import workoutStore from "../store/workoutStore";
 import { Headline, Caption, Divider } from "react-native-paper";
 import { Icon } from "@rneui/base";
 
@@ -13,7 +13,7 @@ const EditWorkout = () => {
           contentContainerStyle={{
             padding: 10,
           }}
-          data={rootStore.workoutStore.workouts.slice()}
+          data={workoutStore.workouts.slice()}
           scrollEnabled
           renderItem={({ item }) => (
             <>
