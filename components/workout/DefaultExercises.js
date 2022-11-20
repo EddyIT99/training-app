@@ -34,7 +34,7 @@ const DefaultExercises = ({ exercises, selectExercise }) => {
                 id={item.id}
                 index={index}
                 numColumns={2}
-                onDefaultExerciseScreen={true}
+                currentScreen="defaultExercises"
                 exercise={item.exercise}
                 selected={item.selected}
                 selectExercise={selectExercise}

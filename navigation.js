@@ -13,7 +13,7 @@ import Statistics from "./screens/Statistics";
 import CreateWorkout from "./screens/CreateWorkout";
 import StartWorkout from "./screens/StartWorkout";
 import EditWorkout from "./screens/EditWorkout";
-import DefaultExercises from "./components/workout/DefaultExercises";
+import Workouts from "./screens/Workouts";
 
 import { useDarkMode } from "./context/themeContext";
 
@@ -92,19 +92,19 @@ function Navigation() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="DefaultExercises"
-          component={DefaultExercises}
-          options={{ headerTitle: "Choose exercises" }}
-        />
-        <Stack.Screen
           name="StartWorkout"
           component={StartWorkout}
           options={{ headerTitle: "Start workout" }}
         />
         <Stack.Screen
+          name="Workouts"
+          component={Workouts}
+          options={({ route }) => ({ title: route.params.title })}
+        />
+        <Stack.Screen
           name="EditWorkout"
           component={EditWorkout}
-          options={{ headerTitle: "Edit workout" }}
+          options={({ route }) => ({ title: route.params.title })}
         />
       </Stack.Navigator>
     </NavigationContainer>

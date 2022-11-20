@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
 
@@ -13,39 +13,49 @@ const Home = () => {
       text: "Create Workout",
     },
     {
-      screen: "StartWorkout",
+      screen: "Workouts",
+      type: "start",
       text: "Start Workout",
     },
     {
-      screen: "EditWorkout",
+      screen: "Workouts",
+      type: "edit",
       text: "Edit Workout",
     },
   ];
 
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingHorizontal: 30,
-        justifyContent: "space-evenly",
-      }}
-    >
+    // <ScrollView style={styles.container}>
+    <View style={styles.wrapper}>
       {buttonArray.map((button, index) => (
-        <HomeScreenButton
+        <View
           key={index}
-          screen={button.screen}
-          text={button.text}
-          theme={theme}
-        />
+          style={{
+            flex: 1,
+            marginBottom: index != buttonArray.length - 1 ? 16 : 0,
+          }}
+        >
+          <HomeScreenButton
+            screen={button.screen}
+            type={button.type}
+            text={button.text}
+            theme={theme}
+          />
+        </View>
       ))}
     </View>
+    // </ScrollView>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   wrapper: {
     flex: 1,
+    padding: 16,
   },
 });

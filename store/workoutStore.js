@@ -2,11 +2,7 @@
 import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
-import {
-  makePersistable,
-  stopPersisting,
-  clearPersistedStore,
-} from "mobx-persist-store";
+import { makePersistable, stopPersisting } from "mobx-persist-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function addWorkout(workouts, workoutName, exercises) {
@@ -22,6 +18,20 @@ function addWorkout(workouts, workoutName, exercises) {
 
 function deleteWorkout(workouts, workoutId) {
   return workouts.filter((workout) => workout.id !== workoutId);
+}
+
+function updateWorkout(oldWorkoutArr, workoutId, newWorkoutArr) {
+  if (newWorkoutArr.length === 0) {
+    return oldWorkoutArr.filter((workout) => workout.id !== workoutId);
+  }
+
+  return oldWorkoutArr.map((workout) => {
+    if (workout.id !== workoutId) {
+      return workout;
+    } else {
+      return { ...workout, exercises: newWorkoutArr };
+    }
+  });
 }
 
 class WorkoutStore {
@@ -44,6 +54,14 @@ class WorkoutStore {
 
   deleteWorkout(workoutId) {
     this.workouts = deleteWorkout(this.workouts, workoutId);
+  }
+
+  getWorkoutById(id) {
+    return this.workouts.find((workout) => workout.id === id);
+  }
+
+  updateWorkout(workoutId, newExerciseArr) {
+    this.workouts = updateWorkout(this.workouts, workoutId, newExerciseArr);
   }
 
   stopStore() {
