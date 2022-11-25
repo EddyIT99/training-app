@@ -5,11 +5,10 @@ import { Headline, Subheading, Title } from "react-native-paper";
 
 const HomeScreenButton = (props) => {
   const navigation = useNavigation();
-  const height = Dimensions.get("screen").height;
 
   return (
     <TouchableOpacity
-      style={styles.buttonStyle(props.theme, height)}
+      style={styles.buttonStyle(props.theme)}
       onPress={() =>
         navigation.navigate(`${props.screen}`, {
           title: props.text,
@@ -25,7 +24,7 @@ const HomeScreenButton = (props) => {
 export default HomeScreenButton;
 
 const styles = StyleSheet.create({
-  buttonStyle: (theme, height) => {
+  buttonStyle: (theme) => {
     return {
       flex: 1,
       backgroundColor: theme.dark ? theme.colors.card : "#FFFFFF",

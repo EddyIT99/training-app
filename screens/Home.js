@@ -25,7 +25,6 @@ const Home = () => {
   ];
 
   return (
-    // <ScrollView style={styles.container}>
     <View style={styles.wrapper}>
       {buttonArray.map((button, index) => (
         <View
@@ -44,18 +43,14 @@ const Home = () => {
         </View>
       ))}
     </View>
-    // </ScrollView>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   wrapper: {
     flex: 1,
-    padding: 16,
+    margin: 16,
   },
 });
