@@ -1,14 +1,7 @@
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { Overlay } from "@rneui/base";
-import {
-  Headline,
-  Subheading,
-  Title,
-  Paragraph,
-  Text,
-  Caption,
-} from "react-native-paper";
+import { Headline, Text } from "react-native-paper";
 import ImagePicker from "./ImagePicker";
 
 import { useTheme } from "@react-navigation/native";
@@ -69,8 +62,8 @@ export default CreateWorkoutModal;
 
 const styles = StyleSheet.create({
   overlayStyle: {
-    borderRadius: 15,
-    padding: 20,
+    borderRadius: 5,
+    padding: 12,
     width: "70%",
     backgroundColor: "#FFFFFF",
     alignItems: "center",
@@ -80,23 +73,23 @@ const styles = StyleSheet.create({
   },
   workoutNameInput: (theme) => {
     return {
-      marginBottom: 20,
-      paddingHorizontal: 10,
+      marginBottom: 12,
+      paddingHorizontal: 12,
       height: 50,
       fontSize: 20,
       color: theme.colors.text,
       backgroundColor: theme.dark ? "#FFFFFF20" : "#00000020",
       width: "100%",
-      borderRadius: 15,
+      borderRadius: 5,
     };
   },
   saveButton: (exerciseName) => {
     return {
-      marginTop: 20,
+      marginTop: 12,
       width: "100%",
       height: 50,
       backgroundColor: exerciseName === "" ? "grey" : "green",
-      borderRadius: 15,
+      borderRadius: 5,
       alignItems: "center",
       justifyContent: "center",
     };

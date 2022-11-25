@@ -15,6 +15,8 @@ import exerciseStore from "../store/exerciseStore";
 import workoutStore from "../store/workoutStore";
 
 import { Observer } from "mobx-react";
+import { Button, Icon } from "@rneui/base";
+import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
 const CreateWorkout = ({ navigation }) => {
   const theme = useTheme();
@@ -24,6 +26,8 @@ const CreateWorkout = ({ navigation }) => {
   });
   const [exercises, setExercises] = useState(data);
   const [workoutName, setWorkoutName] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
 
   function selectExercise(id) {
     let newExerciseArr = exercises.map((exercise) => {
@@ -56,31 +60,27 @@ const CreateWorkout = ({ navigation }) => {
       <ProgressBar currentStepIndex={currentStepIndex} goTo={goTo} />
       <Divider style={{ height: 1 }} />
       {step}
-      <Divider style={{ height: 1 }} />
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[
-            styles.buttonStyle,
-            {
-              borderColor: theme.colors.primary,
-            },
-          ]}
+          style={styles.buttonStyle(theme)}
           onPress={() => (currentStepIndex !== 0 ? back() : cancel())}
         >
           <Paragraph>{currentStepIndex !== 0 ? "Back" : "Cancel"}</Paragraph>
         </TouchableOpacity>
-        <View style={{ width: 10 }}></View>
-
+        {currentStepIndex !== steps.length - 1 ? (
+          <TouchableOpacity
+            style={[styles.buttonStyle(theme), { marginHorizontal: 10 }]}
+            onPress={() => setVisible(true)}
+          >
+            <Paragraph style={{ margin: 0, padding: 0 }}>Add custom</Paragraph>
+          </TouchableOpacity>
+        ) : (
+          <View style={{ width: 10 }} />
+        )}
         <Observer>
           {() => (
             <TouchableOpacity
-              style={[
-                styles.buttonStyle,
-                {
-                  backgroundColor: theme.colors.primary,
-                  borderColor: theme.colors.primary,
-                },
-              ]}
+              style={styles.buttonStyle(theme)}
               onPress={() =>
                 currentStepIndex !== steps.length - 1 ? next() : saveWorkout()
               }
@@ -92,6 +92,11 @@ const CreateWorkout = ({ navigation }) => {
           )}
         </Observer>
       </View>
+      <CreateWorkoutModal
+        visible={visible}
+        setVisible={setVisible}
+        setSnackbarVisible={setSnackbarVisible}
+      />
     </View>
   );
 };
@@ -102,16 +107,18 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 10,
-    paddingVertical: 10,
+    padding: 10,
     height: 70,
   },
-  buttonStyle: {
-    flex: 1,
-    height: "100%",
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 5,
+  buttonStyle: (theme) => {
+    return {
+      flex: 1,
+      height: "100%",
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 5,
+    };
   },
 });
