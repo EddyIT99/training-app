@@ -79,7 +79,7 @@ const WorkoutCard = ({
               alignSelf: "center",
             }}
             onPress={() => {
-              if (currentScreen !== "edit") {
+              if (screen !== "edit") {
                 exerciseStore.selectExercise(id);
                 console.log(exerciseStore.exercises);
               } else {
@@ -99,7 +99,7 @@ const WorkoutCard = ({
                 color={"#00000035"}
                 icon={<Icon name="remove" size={20} />}
                 onPress={() => {
-                  if (currentScreen !== "edit") {
+                  if (screen !== "edit") {
                     exerciseStore.decreaseAmount(id, "sets");
                   } else {
                     decreaseAmount(id, "sets");
@@ -114,7 +114,7 @@ const WorkoutCard = ({
                 color={"#00000035"}
                 icon={<Icon name="add" size={20} />}
                 onPress={() => {
-                  if (currentScreen !== "edit") {
+                  if (screen !== "edit") {
                     exerciseStore.increaseAmount(id, "sets");
                   } else {
                     increaseAmount(id, "sets");
@@ -133,7 +133,7 @@ const WorkoutCard = ({
                 color={"#00000035"}
                 icon={<Icon name="remove" size={20} />}
                 onPress={() => {
-                  if (currentScreen !== "edit") {
+                  if (screen !== "edit") {
                     exerciseStore.decreaseAmount(id, "reps");
                   } else {
                     decreaseAmount(id, "reps");
@@ -148,7 +148,7 @@ const WorkoutCard = ({
                 color={"#00000035"}
                 icon={<Icon name="add" size={20} />}
                 onPress={() => {
-                  if (currentScreen !== "edit") {
+                  if (screen !== "edit") {
                     exerciseStore.increaseAmount(id, "reps");
                   } else {
                     increaseAmount(id, "reps");

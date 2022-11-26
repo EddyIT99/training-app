@@ -87,7 +87,7 @@ const EditWorkout = ({ navigation, route }) => {
                 exercise={item.exercise}
                 sets={item.sets}
                 reps={item.reps}
-                currentScreen="edit"
+                screen="edit"
                 deleteExercise={deleteExercise}
                 increaseAmount={increaseAmount}
                 decreaseAmount={decreaseAmount}
