@@ -2,21 +2,8 @@ import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
 import { defaultData } from "../assets/defaultData";
-import { makePersistable } from "mobx-persist-store";
+import { makePersistable, clearPersistedStore } from "mobx-persist-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-function addExercise(exercises, exerciseName, image) {
-  return [
-    ...exercises,
-    {
-      id: uuidv4(),
-      exercise: exerciseName,
-      image: image,
-      sets: 0,
-      reps: 0,
-    },
-  ];
-}
 
 function addDefaultExercise(exercises, exerciseName, image) {
   return [
@@ -92,17 +79,6 @@ class ExerciseStore {
     this.newImage = image;
   }
 
-  addExercise() {
-    this.exercises = addExercise(
-      this.exercises,
-      this.newExerciseName,
-      this.newImage
-    );
-    this.snackBarText = this.newExerciseName;
-    this.newExerciseName = "";
-    this.newImage = null;
-  }
-
   addDefaultExercise() {
     this.defaultExercises = addDefaultExercise(
       this.defaultExercises,
@@ -121,6 +97,9 @@ class ExerciseStore {
         sets: 0,
         reps: 0,
       });
+      this.snackBarText = this.newExerciseName;
+      this.newExerciseName = "";
+      this.newImage = null;
     } else {
       this.exercises = deleteExercise(this.exercises, exerciseId);
     }
@@ -141,6 +120,10 @@ class ExerciseStore {
 
   deleteAddedExercises() {
     this.exercises = [];
+  }
+
+  async clearStoredDate() {
+    await clearPersistedStore(this);
   }
 }
 

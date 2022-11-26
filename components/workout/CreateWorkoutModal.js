@@ -13,8 +13,8 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
   const theme = useTheme();
 
   const save = () => {
-    setSnackbarVisible(true);
     exerciseStore.addDefaultExercise();
+    setSnackbarVisible(true);
     setVisible(false);
   };
 

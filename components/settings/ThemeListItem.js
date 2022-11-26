@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, TouchableNativeFeedback } from "react-native";
 
 import { CheckBox, Icon } from "@rneui/base";
 
@@ -9,11 +9,11 @@ const ThemeListItem = (props) => {
   const theme = useTheme();
 
   return (
-    <Pressable onPress={props.onPress}>
+    <TouchableNativeFeedback onPress={props.onPress}>
       <View
         style={{
           flexDirection: "row",
-          paddingHorizontal: 20,
+          paddingHorizontal: 25,
           alignItems: "center",
           justifyContent: "space-between",
         }}
@@ -52,7 +52,7 @@ const ThemeListItem = (props) => {
           onPress={props.onPress}
         />
       </View>
-    </Pressable>
+    </TouchableNativeFeedback>
   );
 };
 
