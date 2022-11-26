@@ -133,8 +133,9 @@ class ExerciseStore {
     });
   }
 
-  async clearStoredDate() {
-    await clearPersistedStore(this);
+  clearStoredData() {
+    clearPersistedStore(this);
+    this.defaultExercises = defaultData;
   }
 }
 
