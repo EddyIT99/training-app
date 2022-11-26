@@ -1,31 +1,34 @@
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
-import { Observer } from "mobx-react";
-import workoutStore from "../store/workoutStore";
-import { Headline, Paragraph, Caption, Divider } from "react-native-paper";
-import { Icon } from "@rneui/base";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native"
+import React from "react"
+import { Observer } from "mobx-react"
+import workoutStore from "../store/workoutStore"
+import { Headline, Paragraph, Caption, Divider } from "react-native-paper"
+import { Icon } from "@rneui/base"
 
-import AnimatedLottieView from "lottie-react-native";
+import AnimatedLottieView from "lottie-react-native"
 
 const Workouts = ({ navigation, route }) => {
-  const { screenType } = route.params;
+  const { screenType } = route.params
 
   function onPressAction(item) {
-    console.log(item.name, item.id);
+    console.log(item.name, item.id)
     switch (screenType) {
       case "edit": {
         navigation.navigate("EditWorkout", {
           workoutId: item.id,
           workoutName: item.name,
-        });
-        break;
+        })
+        break
       }
       case "start": {
-        // navigation.navigate("StartWorkout");
-        break;
+        navigation.navigate("SelectWorkout", {
+          workoutId: item.id,
+          workoutName: item.name,
+        })
+        break
       }
       default:
-        break;
+        break
     }
   }
 
@@ -46,23 +49,32 @@ const Workouts = ({ navigation, route }) => {
                     style={styles.listItemStyle}
                     onPress={() => onPressAction(item)}
                   >
-                    <View>
-                      <Headline>{item.name}</Headline>
-                      <Caption>
+                    <View style={{}}>
+                      <Headline style={{ alignSelf: "center" }}>
+                        {item.name}
+                      </Headline>
+                      <Caption style={{ alignSelf: "center" }}>
                         Number of exercises: {item.exercises.length}
                       </Caption>
                     </View>
-                    <Icon
-                      name={
-                        screenType === "edit"
-                          ? "edit"
-                          : screenType === "start"
-                          ? "play"
-                          : null
-                      }
-                      type="antdesign"
-                      size={30}
-                    />
+                    <View
+                      style={{
+                        position: "absolute",
+                        right: 20,
+                      }}
+                    >
+                      <Icon
+                        name={
+                          screenType === "edit"
+                            ? "edit"
+                            : screenType === "start"
+                            ? "play"
+                            : null
+                        }
+                        type="antdesign"
+                        size={30}
+                      />
+                    </View>
                   </TouchableOpacity>
                   <Divider />
                 </>
@@ -88,16 +100,19 @@ const Workouts = ({ navigation, route }) => {
         </>
       )}
     </Observer>
-  );
-};
+  )
+}
 
-export default Workouts;
+export default Workouts
 
 const styles = StyleSheet.create({
   listItemStyle: {
+    height: 80,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingHorizontal: 5,
+    borderRadius: 20,
+    backgroundColor: "lightgray",
   },
-});
+})
