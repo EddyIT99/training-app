@@ -85,6 +85,9 @@ class ExerciseStore {
       this.newExerciseName,
       this.newImage
     );
+    this.snackBarText = this.newExerciseName;
+    this.newExerciseName = "";
+    this.newImage = null;
   }
 
   selectExercise(exerciseId, exerciseName, image) {
@@ -97,9 +100,6 @@ class ExerciseStore {
         sets: 0,
         reps: 0,
       });
-      this.snackBarText = this.newExerciseName;
-      this.newExerciseName = "";
-      this.newImage = null;
     } else {
       this.exercises = deleteExercise(this.exercises, exerciseId);
     }
