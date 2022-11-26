@@ -6,7 +6,7 @@ import ImagePicker from "./ImagePicker";
 
 import { useTheme } from "@react-navigation/native";
 
-import store from "../../store/exerciseStore";
+import exerciseStore from "../../store/exerciseStore";
 import { observer } from "mobx-react";
 
 const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
@@ -14,7 +14,7 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
 
   const save = () => {
     setSnackbarVisible(true);
-    store.addExercise();
+    exerciseStore.addDefaultExercise();
     setVisible(false);
   };
 
@@ -24,16 +24,16 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
         <Headline style={styles.headerText}>Add custom exercise</Headline>
         <TextInput
           placeholder="Enter exercise name..."
-          value={store.newExerciseName}
-          onChangeText={(text) => store.updateNewExerciseName(text)}
+          value={exerciseStore.newExerciseName}
+          onChangeText={(text) => exerciseStore.updateNewExerciseName(text)}
           style={styles.workoutNameInput(theme)}
         />
         <ImagePicker />
 
         <TouchableOpacity
-          style={styles.saveButton(store.newExerciseName)}
+          style={styles.saveButton(exerciseStore.newExerciseName)}
           onPress={save}
-          disabled={store.newExerciseName === "" ? true : false}
+          disabled={exerciseStore.newExerciseName === "" ? true : false}
         >
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
@@ -48,8 +48,8 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
       isVisible={visible}
       onBackdropPress={() => {
         setVisible(false);
-        store.updateNewExerciseName("");
-        store.updateImage("");
+        exerciseStore.updateNewExerciseName("");
+        exerciseStore.updateImage("");
       }}
       overlayStyle={styles.overlayStyle}
     >

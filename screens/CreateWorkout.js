@@ -1,12 +1,13 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Divider, Paragraph } from "react-native-paper";
+import { Divider, Paragraph, Snackbar } from "react-native-paper";
 
 import ProgressBar from "../components/workout/ProgressBar";
 import DefaultExercises from "../components/workout/DefaultExercises";
 import UpdateExercises from "../components/workout/UpdateExercises";
 import EnterName from "../components/workout/EnterName";
+import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
 import { useMultistepPage } from "../hooks/useMultistepPage";
 import { useTheme } from "@react-navigation/native";
@@ -15,16 +16,15 @@ import exerciseStore from "../store/exerciseStore";
 import workoutStore from "../store/workoutStore";
 
 import { Observer } from "mobx-react";
-import { Button, Icon } from "@rneui/base";
-import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
 
 const CreateWorkout = ({ navigation }) => {
   const theme = useTheme();
 
-  const data = exerciseStore.defaultExercises.map((exercise) => {
-    return { ...exercise, sets: 0, reps: 0, selected: false };
-  });
-  const [exercises, setExercises] = useState(data);
+  useEffect(() => {
+    setExercises(exerciseStore.defaultExercises.slice());
+  }, [exerciseStore.defaultExercises]);
+
+  const [exercises, setExercises] = useState([]);
   const [workoutName, setWorkoutName] = useState("");
   const [visible, setVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -97,6 +97,17 @@ const CreateWorkout = ({ navigation }) => {
         setVisible={setVisible}
         setSnackbarVisible={setSnackbarVisible}
       />
+      <Snackbar
+        wrapperStyle={{ bottom: 60 }}
+        visible={snackbarVisible}
+        duration={2000}
+        onDismiss={() => {
+          setSnackbarVisible(false);
+          exerciseStore.updateSnackBarText("");
+        }}
+      >
+        Added exercise '{exerciseStore.snackBarText}'
+      </Snackbar>
     </View>
   );
 };

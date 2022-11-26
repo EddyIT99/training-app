@@ -2,6 +2,8 @@ import "react-native-get-random-values";
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
 import { defaultData } from "../assets/defaultData";
+import { makePersistable } from "mobx-persist-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function addExercise(exercises, exerciseName, image) {
   return [
@@ -12,6 +14,17 @@ function addExercise(exercises, exerciseName, image) {
       image: image,
       sets: 0,
       reps: 0,
+    },
+  ];
+}
+
+function addDefaultExercise(exercises, exerciseName, image) {
+  return [
+    ...exercises,
+    {
+      id: uuidv4(),
+      exercise: exerciseName,
+      image: image,
     },
   ];
 }
@@ -56,8 +69,15 @@ class ExerciseStore {
   snackBarText = "";
 
   constructor(data) {
-    this.defaultExercises = data;
+    data.map((exercise) =>
+      this.defaultExercises.push({ ...exercise, selected: false })
+    );
     makeAutoObservable(this);
+    makePersistable(this, {
+      name: "ExerciseStore",
+      properties: ["defaultExercises"],
+      storage: AsyncStorage,
+    });
   }
 
   updateNewExerciseName(text) {
@@ -81,6 +101,14 @@ class ExerciseStore {
     this.snackBarText = this.newExerciseName;
     this.newExerciseName = "";
     this.newImage = null;
+  }
+
+  addDefaultExercise() {
+    this.defaultExercises = addDefaultExercise(
+      this.defaultExercises,
+      this.newExerciseName,
+      this.newImage
+    );
   }
 
   selectExercise(exerciseId, exerciseName, image) {
