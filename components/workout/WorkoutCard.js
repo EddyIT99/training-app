@@ -1,11 +1,11 @@
-import React from "react"
-import { StyleSheet, View, TouchableOpacity } from "react-native"
+import React from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import { useTheme } from "@react-navigation/native"
-import { Icon } from "@rneui/base"
-import exerciseStore from "../../store/exerciseStore"
-import { Subheading, Paragraph } from "react-native-paper"
-import { Button } from "@rneui/base"
+import { useTheme } from "@react-navigation/native";
+import { Icon } from "@rneui/base";
+import exerciseStore from "../../store/exerciseStore";
+import { Subheading, Paragraph } from "react-native-paper";
+import { Button } from "@rneui/base";
 
 const WorkoutCard = ({
   id,
@@ -14,27 +14,26 @@ const WorkoutCard = ({
   reps,
   index,
   numColumns,
-  currentScreen,
+  screen,
   selected,
-  selectExercise,
   deleteExercise,
   increaseAmount,
   decreaseAmount,
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   function rightMargin() {
     switch (numColumns) {
       case 1:
-        return 0
+        return 0;
       case 2:
-        return index % 2 !== 0 ? 0 : 5
+        return index % 2 !== 0 ? 0 : 5;
       default:
-        return 0
+        return 0;
     }
   }
 
-  if (currentScreen === "defaultExercises") {
+  if (screen === "CreateWorkout" || screen === "SelectWorkout") {
     return (
       <TouchableOpacity
         style={[
@@ -44,8 +43,9 @@ const WorkoutCard = ({
           },
         ]}
         onPress={() => {
-          selectExercise(id)
-          exerciseStore.selectExercise(id, exercise, "")
+          if (screen === "CreateWorkout")
+            exerciseStore.selectExercise(id, exercise, "");
+          else console.log(exercise, id);
         }}
       >
         <View style={[styles.innerCardWrapper]}>
@@ -54,7 +54,7 @@ const WorkoutCard = ({
           </Subheading>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 
   return (
@@ -80,11 +80,10 @@ const WorkoutCard = ({
             }}
             onPress={() => {
               if (currentScreen !== "edit") {
-                selectExercise(id)
-                exerciseStore.deleteExercise(id)
-                console.log(exerciseStore.exercises)
+                exerciseStore.selectExercise(id);
+                console.log(exerciseStore.exercises);
               } else {
-                deleteExercise(id)
+                deleteExercise(id);
               }
             }}
           />
@@ -101,9 +100,9 @@ const WorkoutCard = ({
                 icon={<Icon name="remove" size={20} />}
                 onPress={() => {
                   if (currentScreen !== "edit") {
-                    exerciseStore.decreaseAmount(id, "sets")
+                    exerciseStore.decreaseAmount(id, "sets");
                   } else {
-                    decreaseAmount(id, "sets")
+                    decreaseAmount(id, "sets");
                   }
                 }}
               />
@@ -116,9 +115,9 @@ const WorkoutCard = ({
                 icon={<Icon name="add" size={20} />}
                 onPress={() => {
                   if (currentScreen !== "edit") {
-                    exerciseStore.increaseAmount(id, "sets")
+                    exerciseStore.increaseAmount(id, "sets");
                   } else {
-                    increaseAmount(id, "sets")
+                    increaseAmount(id, "sets");
                   }
                 }}
               />
@@ -135,9 +134,9 @@ const WorkoutCard = ({
                 icon={<Icon name="remove" size={20} />}
                 onPress={() => {
                   if (currentScreen !== "edit") {
-                    exerciseStore.decreaseAmount(id, "reps")
+                    exerciseStore.decreaseAmount(id, "reps");
                   } else {
-                    decreaseAmount(id, "reps")
+                    decreaseAmount(id, "reps");
                   }
                 }}
               />
@@ -150,9 +149,9 @@ const WorkoutCard = ({
                 icon={<Icon name="add" size={20} />}
                 onPress={() => {
                   if (currentScreen !== "edit") {
-                    exerciseStore.increaseAmount(id, "reps")
+                    exerciseStore.increaseAmount(id, "reps");
                   } else {
-                    increaseAmount(id, "reps")
+                    increaseAmount(id, "reps");
                   }
                 }}
               />
@@ -161,10 +160,10 @@ const WorkoutCard = ({
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default WorkoutCard
+export default WorkoutCard;
 
 const styles = StyleSheet.create({
   buttonIncreaseStyle: {
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
       borderColor: "#00000020",
       borderRadius: 5,
       justifyContent: "center",
-    }
+    };
   },
   cardWrapper: (theme, rightMargin) => {
     return {
@@ -200,7 +199,7 @@ const styles = StyleSheet.create({
       borderColor: "#00000020",
       borderRadius: 5,
       justifyContent: "center",
-    }
+    };
   },
   innerCardWrapper: {
     flex: 1,
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
     return {
       color: theme.colors.text,
       fontWeight: "900",
-    }
+    };
   },
   setsAndRepsWrapper: {
     flex: 1,
@@ -224,7 +223,7 @@ const styles = StyleSheet.create({
   setsAndRepsText: (theme) => {
     return {
       color: theme.colors.text,
-    }
+    };
   },
   setsAndRepsAmount: {
     flex: 1,
@@ -240,7 +239,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       // height: "100%",
       width: 40,
-    }
+    };
   },
   amount: (theme) => {
     return {
@@ -249,11 +248,11 @@ const styles = StyleSheet.create({
       backgroundColor: theme.dark ? "#FFFFFF60" : "#F5F5F5",
       alignItems: "center",
       justifyContent: "center",
-    }
+    };
   },
   buttonText: (theme) => {
     return {
       color: theme.colors.text,
-    }
+    };
   },
-})
+});

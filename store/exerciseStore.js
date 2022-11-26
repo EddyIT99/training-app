@@ -12,8 +12,16 @@ function addDefaultExercise(exercises, exerciseName, image) {
       id: uuidv4(),
       exercise: exerciseName,
       image: image,
+      selected: false,
     },
   ];
+}
+
+function selectExercise(exercises, id) {
+  return exercises.map((exercise) => {
+    if (exercise.id !== id) return exercise;
+    return { ...exercise, selected: !exercise.selected };
+  });
 }
 
 function deleteExercise(exercises, id) {
@@ -56,9 +64,7 @@ class ExerciseStore {
   snackBarText = "";
 
   constructor(data) {
-    data.map((exercise) =>
-      this.defaultExercises.push({ ...exercise, selected: false })
-    );
+    this.defaultExercises = data;
     makeAutoObservable(this);
     makePersistable(this, {
       name: "ExerciseStore",
@@ -91,6 +97,8 @@ class ExerciseStore {
   }
 
   selectExercise(exerciseId, exerciseName, image) {
+    this.defaultExercises = selectExercise(this.defaultExercises, exerciseId);
+
     const found = this.exercises.find((exercise) => exercise.id === exerciseId);
     if (!found) {
       this.exercises.push({
@@ -120,6 +128,9 @@ class ExerciseStore {
 
   deleteAddedExercises() {
     this.exercises = [];
+    this.defaultExercises = this.defaultExercises.map((exercise) => {
+      return { ...exercise, selected: false };
+    });
   }
 
   async clearStoredDate() {

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Divider, Paragraph, Snackbar } from "react-native-paper";
 
 import ProgressBar from "../components/workout/ProgressBar";
-import DefaultExercises from "../components/workout/DefaultExercises";
+import Exercises from "../components/workout/Exercises";
 import UpdateExercises from "../components/workout/UpdateExercises";
 import EnterName from "../components/workout/EnterName";
 import CreateWorkoutModal from "../components/workout/CreateWorkoutModal";
@@ -19,27 +19,13 @@ import { Observer } from "mobx-react";
 
 const CreateWorkout = ({ navigation }) => {
   const theme = useTheme();
-
-  useEffect(() => {
-    setExercises(exerciseStore.defaultExercises.slice());
-  }, [exerciseStore.defaultExercises]);
-
-  const [exercises, setExercises] = useState([]);
   const [workoutName, setWorkoutName] = useState("");
   const [visible, setVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-  function selectExercise(id) {
-    let newExerciseArr = exercises.map((exercise) => {
-      if (exercise.id !== id) return exercise;
-      else return { ...exercise, selected: !exercise.selected };
-    });
-    setExercises(newExerciseArr);
-  }
-
   const { step, steps, goTo, next, back, currentStepIndex } = useMultistepPage([
-    <DefaultExercises exercises={exercises} selectExercise={selectExercise} />,
-    <UpdateExercises selectExercise={selectExercise} />,
+    <Exercises screen="CreateWorkout" />,
+    <UpdateExercises />,
     <EnterName workoutName={workoutName} setWorkoutName={setWorkoutName} />,
   ]);
 

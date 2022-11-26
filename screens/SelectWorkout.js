@@ -1,37 +1,37 @@
-import { StyleSheet, Text, View } from "react-native"
-import { useState, useLayoutEffect, useEffect } from "react"
-import { useTheme } from "@react-navigation/native"
-import workoutStore from "../store/workoutStore"
-import DefaultExercises from "../components/workout/DefaultExercises"
+import { StyleSheet, Text, View } from "react-native";
+import { useState, useLayoutEffect, useEffect } from "react";
+import { useTheme } from "@react-navigation/native";
+import workoutStore from "../store/workoutStore";
+import Exercises from "../components/workout/Exercises";
 
 const SelectWorkout = ({ navigation, route }) => {
-  const { workoutName, workoutId } = route.params
+  const { workoutName, workoutId } = route.params;
 
-  const theme = useTheme()
-  const [exercises, setExercises] = useState([])
+  const theme = useTheme();
+  const [exercises, setExercises] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: workoutName,
-    })
-  }, [])
+    });
+  }, []);
 
   const selectExercise = () => {
-    navigation.navigate("")
-  }
+    navigation.navigate("");
+  };
 
   useEffect(() => {
-    const workout = workoutStore.getWorkoutById(workoutId)
-    setExercises(workout.exercises.slice())
-  }, [])
+    const workout = workoutStore.getWorkoutById(workoutId);
+    setExercises(workout.exercises.slice());
+  }, []);
 
   return (
     <View>
-      <DefaultExercises exercises={exercises} />
+      <Exercises exercises={exercises} screen="SelectWorkout" />
     </View>
-  )
-}
+  );
+};
 
-export default SelectWorkout
+export default SelectWorkout;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

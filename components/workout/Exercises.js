@@ -5,8 +5,9 @@ import { Headline } from "react-native-paper";
 import WorkoutCard from "./WorkoutCard";
 
 import { Observer } from "mobx-react";
+import exerciseStore from "../../store/exerciseStore";
 
-const DefaultExercises = ({ exercises, selectExercise }) => {
+const Exercises = ({ exercises, screen }) => {
   return (
     <>
       <View
@@ -25,7 +26,11 @@ const DefaultExercises = ({ exercises, selectExercise }) => {
               marginHorizontal: 10,
             }}
             ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-            data={exercises}
+            data={
+              screen === "CreateWorkout"
+                ? exerciseStore.defaultExercises.slice()
+                : exercises
+            }
             numColumns={2}
             key={2}
             renderItem={({ item, index }) => (
@@ -33,10 +38,9 @@ const DefaultExercises = ({ exercises, selectExercise }) => {
                 id={item.id}
                 index={index}
                 numColumns={2}
-                currentScreen="defaultExercises"
+                screen={screen}
                 exercise={item.exercise}
                 selected={item.selected}
-                selectExercise={selectExercise}
               />
             )}
           />
@@ -46,6 +50,6 @@ const DefaultExercises = ({ exercises, selectExercise }) => {
   );
 };
 
-export default DefaultExercises;
+export default Exercises;
 
 const styles = StyleSheet.create({});

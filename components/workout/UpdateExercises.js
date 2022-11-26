@@ -9,7 +9,7 @@ import WorkoutCard from "./WorkoutCard";
 
 import exerciseStore from "../../store/exerciseStore";
 
-const UpdateExercises = ({ selectExercise }) => {
+const UpdateExercises = () => {
   return (
     <>
       <View
@@ -61,7 +61,6 @@ const UpdateExercises = ({ selectExercise }) => {
                   exercise={item.exercise}
                   sets={item.sets}
                   reps={item.reps}
-                  selectExercise={selectExercise}
                 />
               )}
             />
