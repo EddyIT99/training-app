@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Image, View, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePick from "expo-image-picker";
 
-import store from "../../store/exerciseStore";
+import exerciseStore from "../../store/exerciseStore";
 import { observer } from "mobx-react";
 import { Icon } from "@rneui/base";
 
@@ -19,23 +19,23 @@ export default observer(function ImagePicker() {
     console.log(result);
 
     if (!result.cancelled) {
-      store.updateImage(result.uri);
+      exerciseStore.updateImage(result.uri);
     }
   };
 
   return (
     <TouchableOpacity style={styles.imageStyle} onPress={pickImage}>
-      {!store.newImage && (
+      {!exerciseStore.newImage && (
         <>
           <Icon name="image" size={50} />
           <Text>Choose image</Text>
           <Text>(Optional)</Text>
         </>
       )}
-      {store.newImage && (
+      {exerciseStore.newImage && (
         <Image
-          source={{ uri: store.newImage }}
-          style={{ width: "100%", height: "100%" }}
+          source={{ uri: exerciseStore.newImage }}
+          style={{ width: "100%", height: "100%", borderRadius: 5 }}
         />
       )}
     </TouchableOpacity>
