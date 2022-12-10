@@ -21,9 +21,12 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
   function AddExercise() {
     return (
       <>
-        <Headline style={styles.headerText}>Add custom exercise</Headline>
+        <Headline style={styles.headerText(theme)}>
+          Add custom exercise
+        </Headline>
         <TextInput
           placeholder="Enter exercise name..."
+          placeholderTextColor={"#FFFFFF40"}
           value={exerciseStore.newExerciseName}
           onChangeText={(text) => exerciseStore.updateNewExerciseName(text)}
           style={styles.workoutNameInput(theme)}
@@ -51,7 +54,10 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
         exerciseStore.updateNewExerciseName("");
         exerciseStore.updateImage("");
       }}
-      overlayStyle={styles.overlayStyle}
+      overlayStyle={styles.overlayStyle(theme)}
+      backdropStyle={{ opacity: 0 }}
+      fullScreen={false}
+      animationType={"slide"}
     >
       <AddExerciseObserver />
     </Overlay>
@@ -61,15 +67,20 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
 export default CreateWorkoutModal;
 
 const styles = StyleSheet.create({
-  overlayStyle: {
-    borderRadius: 5,
-    padding: 12,
-    width: "70%",
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
+  overlayStyle: (theme) => {
+    return {
+      borderRadius: 5,
+      padding: 12,
+      width: "70%",
+      backgroundColor: theme.colors.card,
+      alignItems: "center",
+    };
   },
-  headerText: {
-    marginBottom: 20,
+  headerText: (theme) => {
+    return {
+      marginBottom: 20,
+      color: theme.colors.text,
+    };
   },
   workoutNameInput: (theme) => {
     return {
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
       height: 50,
       fontSize: 20,
       color: theme.colors.text,
-      backgroundColor: theme.dark ? "#FFFFFF20" : "#00000020",
+      backgroundColor: "#333333",
       width: "100%",
       borderRadius: 5,
     };
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
       marginTop: 12,
       width: "100%",
       height: 50,
-      backgroundColor: exerciseName === "" ? "grey" : "green",
+      backgroundColor: exerciseName === "" ? "#444444" : "green",
       borderRadius: 5,
       alignItems: "center",
       justifyContent: "center",

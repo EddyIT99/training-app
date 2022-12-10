@@ -5,6 +5,7 @@ import * as ImagePick from "expo-image-picker";
 import exerciseStore from "../../store/exerciseStore";
 import { observer } from "mobx-react";
 import { Icon } from "@rneui/base";
+import { Paragraph } from "react-native-paper";
 
 export default observer(function ImagePicker() {
   const pickImage = async () => {
@@ -27,9 +28,9 @@ export default observer(function ImagePicker() {
     <TouchableOpacity style={styles.imageStyle} onPress={pickImage}>
       {!exerciseStore.newImage && (
         <>
-          <Icon name="image" size={50} />
-          <Text>Choose image</Text>
-          <Text>(Optional)</Text>
+          <Icon name="image" size={50} color={"#FFFFFF90"} />
+          <Paragraph style={{ color: "#FFFFFF90" }}>Choose image</Paragraph>
+          <Paragraph style={{ color: "#FFFFFF90" }}>(Optional)</Paragraph>
         </>
       )}
       {exerciseStore.newImage && (
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     height: 200,
-    backgroundColor: "#00000020",
+    backgroundColor: "#333333",
     borderRadius: 5,
   },
 });
