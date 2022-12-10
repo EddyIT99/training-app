@@ -96,13 +96,19 @@ const WorkoutCard = ({
         <View style={styles.setsAndRepsWrapper}>
           <View style={styles.innerInnerCardWrapper}>
             <View style={styles.setsAndRepsText(theme)}>
-              <Paragraph style={{ fontSize: 16 }}>Sets</Paragraph>
+              <Paragraph style={{ fontSize: 16, color: theme.colors.text }}>
+                Sets
+              </Paragraph>
             </View>
             <View style={styles.setsAndRepsAmount}>
               <Button
                 buttonStyle={styles.buttonDecreaseStyle}
+                containerStyle={{
+                  borderTopLeftRadius: 20,
+                  borderBottomLeftRadius: 20,
+                }}
                 color={"#00000035"}
-                icon={<Icon name="remove" size={20} />}
+                icon={<Icon name="remove" size={20} color={"#FFFFFF90"} />}
                 onPress={() => {
                   if (screen !== "edit") {
                     exerciseStore.decreaseAmount(id, "sets");
@@ -112,12 +118,20 @@ const WorkoutCard = ({
                 }}
               />
               <Button buttonStyle={styles.amount(theme)}>
-                <Paragraph style={styles.paragraphStyle}>{sets}</Paragraph>
+                <Paragraph
+                  style={[styles.paragraphStyle, { color: "#FFFFFF" }]}
+                >
+                  {sets}
+                </Paragraph>
               </Button>
               <Button
                 buttonStyle={styles.buttonIncreaseStyle}
+                containerStyle={{
+                  borderTopRightRadius: 20,
+                  borderBottomRightRadius: 20,
+                }}
                 color={"#00000035"}
-                icon={<Icon name="add" size={20} />}
+                icon={<Icon name="add" size={20} color={"#FFFFFF90"} />}
                 onPress={() => {
                   if (screen !== "edit") {
                     exerciseStore.increaseAmount(id, "sets");
@@ -130,13 +144,19 @@ const WorkoutCard = ({
           </View>
           <View style={styles.innerInnerCardWrapper}>
             <View style={styles.setsAndRepsText(theme)}>
-              <Paragraph style={{ fontSize: 16 }}>Reps</Paragraph>
+              <Paragraph style={{ fontSize: 16, color: theme.colors.text }}>
+                Reps
+              </Paragraph>
             </View>
             <View style={styles.setsAndRepsAmount}>
               <Button
                 buttonStyle={styles.buttonDecreaseStyle}
+                containerStyle={{
+                  borderTopLeftRadius: 20,
+                  borderBottomLeftRadius: 20,
+                }}
                 color={"#00000035"}
-                icon={<Icon name="remove" size={20} />}
+                icon={<Icon name="remove" size={20} color={"#FFFFFF90"} />}
                 onPress={() => {
                   if (screen !== "edit") {
                     exerciseStore.decreaseAmount(id, "reps");
@@ -146,12 +166,20 @@ const WorkoutCard = ({
                 }}
               />
               <Button buttonStyle={styles.amount(theme)}>
-                <Paragraph>{reps}</Paragraph>
+                <Paragraph
+                  style={[styles.paragraphStyle, { color: "#FFFFFF" }]}
+                >
+                  {reps}
+                </Paragraph>
               </Button>
               <Button
                 buttonStyle={styles.buttonIncreaseStyle}
+                containerStyle={{
+                  borderTopRightRadius: 20,
+                  borderBottomRightRadius: 20,
+                }}
                 color={"#00000035"}
-                icon={<Icon name="add" size={20} />}
+                icon={<Icon name="add" size={20} color={"#FFFFFF90"} />}
                 onPress={() => {
                   if (screen !== "edit") {
                     exerciseStore.increaseAmount(id, "reps");
@@ -250,7 +278,7 @@ const styles = StyleSheet.create({
     return {
       width: 60,
       height: 40,
-      backgroundColor: theme.dark ? "#FFFFFF60" : "#F5F5F5",
+      backgroundColor: theme.dark ? "#555555" : "#F5F5F5",
       alignItems: "center",
       justifyContent: "center",
     };
