@@ -21,7 +21,7 @@ const Exercises = ({ exercises, screen }) => {
           alignItems: "center",
         }}
       >
-        <Headline style={{ color: theme.colors.text }}>
+        <Headline style={{ color: theme.colors.text, marginVertical: 10 }}>
           Select exercises
         </Headline>
       </View>

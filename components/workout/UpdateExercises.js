@@ -22,7 +22,7 @@ const UpdateExercises = () => {
           alignItems: "center",
         }}
       >
-        <Headline style={{ color: theme.colors.text }}>
+        <Headline style={{ color: theme.colors.text, marginVertical: 10 }}>
           Enter sets/reps
         </Headline>
       </View>
