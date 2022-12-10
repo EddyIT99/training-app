@@ -55,7 +55,7 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
         exerciseStore.updateImage("");
       }}
       overlayStyle={styles.overlayStyle(theme)}
-      backdropStyle={{ backgroundColor: "#00000098" }}
+      backdropStyle={{ backgroundColor: "#11111199" }}
       fullScreen={false}
       animationType={"fade"}
     >
