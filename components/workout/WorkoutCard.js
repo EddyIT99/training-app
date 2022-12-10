@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
       marginRight: rightMargin(),
       borderWidth: 2,
       borderColor: "#00000020",
-      borderRadius: 5,
+      borderRadius: 10,
       justifyContent: "center",
     };
   },
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
       marginRight: rightMargin(),
       borderWidth: 2,
       borderColor: "#00000020",
-      borderRadius: 5,
+      borderRadius: 10,
       justifyContent: "center",
     };
   },
