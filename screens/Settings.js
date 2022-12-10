@@ -25,7 +25,7 @@ const Settings = () => {
   return (
     <>
       <ScrollView>
-        <Divider
+        {/* {{<Divider
           style={styles.headerDivider}
           subHeader="Theme settings"
           subHeaderStyle={styles.dividerSubHeader(theme)}
@@ -39,8 +39,9 @@ const Settings = () => {
         <ThemeListItem
           text="Dark mode"
           checked={darkMode}
-          onPress={() => setDarkMode(true)}
-        />
+          onPress={() => setDarkMode(true)}}
+        />}
+         */}
         <Divider
           style={styles.headerDivider}
           subHeader="Storage settings"
