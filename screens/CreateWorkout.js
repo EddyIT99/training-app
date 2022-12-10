@@ -16,6 +16,7 @@ import exerciseStore from "../store/exerciseStore";
 import workoutStore from "../store/workoutStore";
 
 import { Observer } from "mobx-react";
+import { Divider } from "@rneui/base";
 
 const CreateWorkout = ({ navigation }) => {
   const theme = useTheme();
@@ -45,13 +46,16 @@ const CreateWorkout = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: theme.colors.card }}>
       <ProgressBar currentStepIndex={currentStepIndex} goTo={goTo} />
       {step}
+      <Divider />
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.buttonStyle(theme)}
           onPress={() => (currentStepIndex !== 0 ? back() : cancel())}
         >
           <Paragraph style={{ color: theme.colors.text }}>
-            {currentStepIndex !== 0 ? "Back" : "Cancel"}
+            {currentStepIndex !== 0
+              ? "Back".toUpperCase()
+              : "Cancel".toUpperCase()}
           </Paragraph>
         </TouchableOpacity>
         {currentStepIndex === 0 ? (
@@ -62,7 +66,7 @@ const CreateWorkout = ({ navigation }) => {
             <Paragraph
               style={{ margin: 0, padding: 0, color: theme.colors.text }}
             >
-              Add custom
+              {"Add custom".toUpperCase()}
             </Paragraph>
           </TouchableOpacity>
         ) : (
@@ -77,7 +81,9 @@ const CreateWorkout = ({ navigation }) => {
               }
             >
               <Paragraph style={{ color: theme.colors.text }}>
-                {currentStepIndex !== steps.length - 1 ? "Next" : "Save"}
+                {currentStepIndex !== steps.length - 1
+                  ? "Next".toUpperCase()
+                  : "Save".toUpperCase()}
               </Paragraph>
             </TouchableOpacity>
           )}
@@ -116,8 +122,8 @@ const styles = StyleSheet.create({
     return {
       flex: 1,
       height: "100%",
-      borderWidth: 2,
-      borderColor: theme.colors.primary,
+      // borderWidth: 2,
+      // borderColor: theme.colors.primary,
       alignItems: "center",
       justifyContent: "center",
       borderRadius: 5,
