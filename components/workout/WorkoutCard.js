@@ -6,7 +6,6 @@ import { Icon } from "@rneui/base";
 import exerciseStore from "../../store/exerciseStore";
 import { Subheading, Paragraph } from "react-native-paper";
 import { Button } from "@rneui/base";
-import Navigation from "../../navigation";
 import { useNavigation } from "@react-navigation/native";
 
 const WorkoutCard = ({
@@ -49,7 +48,10 @@ const WorkoutCard = ({
           if (screen === "CreateWorkout")
             exerciseStore.selectExercise(id, exercise, "");
           else if (screen === "SelectExercise") {
-            navigation.navigate("StartExercise");
+            navigation.navigate("StartExercise", {
+              exerciseName: exercise,
+              exerciseId: id,
+            });
           } else console.log(exercise, id);
         }}
       >
