@@ -1,34 +1,34 @@
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native"
-import React from "react"
-import { Observer } from "mobx-react"
-import workoutStore from "../store/workoutStore"
-import { Headline, Paragraph, Caption, Divider } from "react-native-paper"
-import { Icon } from "@rneui/base"
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { Observer } from "mobx-react";
+import workoutStore from "../store/workoutStore";
+import { Headline, Paragraph, Caption, Divider } from "react-native-paper";
+import { Icon } from "@rneui/base";
 
-import AnimatedLottieView from "lottie-react-native"
+import AnimatedLottieView from "lottie-react-native";
 
 const Workouts = ({ navigation, route }) => {
-  const { screenType } = route.params
+  const { screenType } = route.params;
 
   function onPressAction(item) {
-    console.log(item.name, item.id)
+    console.log(item.name, item.id);
     switch (screenType) {
       case "edit": {
         navigation.navigate("EditWorkout", {
           workoutId: item.id,
           workoutName: item.name,
-        })
-        break
+        });
+        break;
       }
       case "start": {
-        navigation.navigate("SelectWorkout", {
+        navigation.navigate("SelectExercise", {
           workoutId: item.id,
           workoutName: item.name,
-        })
-        break
+        });
+        break;
       }
       default:
-        break
+        break;
     }
   }
 
@@ -100,10 +100,10 @@ const Workouts = ({ navigation, route }) => {
         </>
       )}
     </Observer>
-  )
-}
+  );
+};
 
-export default Workouts
+export default Workouts;
 
 const styles = StyleSheet.create({
   listItemStyle: {
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "lightgray",
   },
-})
+});

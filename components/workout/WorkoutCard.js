@@ -6,6 +6,8 @@ import { Icon } from "@rneui/base";
 import exerciseStore from "../../store/exerciseStore";
 import { Subheading, Paragraph } from "react-native-paper";
 import { Button } from "@rneui/base";
+import Navigation from "../../navigation";
+import { useNavigation } from "@react-navigation/native";
 
 const WorkoutCard = ({
   id,
@@ -21,6 +23,7 @@ const WorkoutCard = ({
   decreaseAmount,
 }) => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   function rightMargin() {
     switch (numColumns) {
@@ -33,7 +36,7 @@ const WorkoutCard = ({
     }
   }
 
-  if (screen === "CreateWorkout" || screen === "SelectWorkout") {
+  if (screen === "CreateWorkout" || screen === "SelectExercise") {
     return (
       <TouchableOpacity
         style={[
@@ -45,7 +48,9 @@ const WorkoutCard = ({
         onPress={() => {
           if (screen === "CreateWorkout")
             exerciseStore.selectExercise(id, exercise, "");
-          else console.log(exercise, id);
+          else if (screen === "SelectExercise") {
+            navigation.navigate("StartExercise");
+          } else console.log(exercise, id);
         }}
       >
         <View style={[styles.innerCardWrapper]}>

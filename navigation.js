@@ -11,9 +11,10 @@ import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import Statistics from "./screens/Statistics";
 import CreateWorkout from "./screens/CreateWorkout";
-import SelectWorkout from "./screens/SelectWorkout";
+import SelectExercise from "./screens/SelectExercise";
 import EditWorkout from "./screens/EditWorkout";
 import Workouts from "./screens/Workouts";
+import StartExercise from "./screens/StartExercise";
 
 import { useDarkMode } from "./context/themeContext";
 
@@ -85,16 +86,20 @@ function Navigation() {
           component={BottomTabs}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="CreateWorkout"
           component={CreateWorkout}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SelectWorkout"
-          component={SelectWorkout}
-          options={{ headerTitle: "Select Workout" }}
+          name="SelectExercise"
+          component={SelectExercise}
+          options={{ headerTitle: "Select Exercise" }}
+        />
+        <Stack.Screen
+          name="StartExercise"
+          component={StartExercise}
+          options={{ headerTitle: "Start Exercise" }}
         />
         <Stack.Screen
           name="Workouts"

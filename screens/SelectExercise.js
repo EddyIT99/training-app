@@ -4,7 +4,7 @@ import { useTheme } from "@react-navigation/native";
 import workoutStore from "../store/workoutStore";
 import Exercises from "../components/workout/Exercises";
 
-const SelectWorkout = ({ navigation, route }) => {
+const SelectExercise = ({ navigation, route }) => {
   const { workoutName, workoutId } = route.params;
 
   const theme = useTheme();
@@ -17,7 +17,7 @@ const SelectWorkout = ({ navigation, route }) => {
   }, []);
 
   const selectExercise = () => {
-    navigation.navigate("");
+    navigation.navigate("StartWorkout");
   };
 
   useEffect(() => {
@@ -27,11 +27,11 @@ const SelectWorkout = ({ navigation, route }) => {
 
   return (
     <View>
-      <Exercises exercises={exercises} screen="SelectWorkout" />
+      <Exercises exercises={exercises} screen="SelectExercise" />
     </View>
   );
 };
 
-export default SelectWorkout;
+export default SelectExercise;
 
 const styles = StyleSheet.create({});
