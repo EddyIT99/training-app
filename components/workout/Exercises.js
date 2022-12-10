@@ -7,7 +7,11 @@ import WorkoutCard from "./WorkoutCard";
 import { Observer } from "mobx-react";
 import exerciseStore from "../../store/exerciseStore";
 
+import { useTheme } from "@react-navigation/native";
+
 const Exercises = ({ exercises, screen }) => {
+  const theme = useTheme();
+
   return (
     <>
       <View
@@ -17,7 +21,9 @@ const Exercises = ({ exercises, screen }) => {
           alignItems: "center",
         }}
       >
-        <Headline>Select exercises</Headline>
+        <Headline style={{ color: theme.colors.text }}>
+          Select exercises
+        </Headline>
       </View>
       <Observer>
         {() => (

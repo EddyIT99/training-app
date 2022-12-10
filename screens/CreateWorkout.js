@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { Divider, Paragraph, Snackbar } from "react-native-paper";
+import { Paragraph, Snackbar } from "react-native-paper";
 
 import ProgressBar from "../components/workout/ProgressBar";
 import Exercises from "../components/workout/Exercises";
@@ -42,23 +42,28 @@ const CreateWorkout = ({ navigation }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.card }}>
       <ProgressBar currentStepIndex={currentStepIndex} goTo={goTo} />
-      <Divider style={{ height: 1 }} />
       {step}
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.buttonStyle(theme)}
           onPress={() => (currentStepIndex !== 0 ? back() : cancel())}
         >
-          <Paragraph>{currentStepIndex !== 0 ? "Back" : "Cancel"}</Paragraph>
+          <Paragraph style={{ color: theme.colors.text }}>
+            {currentStepIndex !== 0 ? "Back" : "Cancel"}
+          </Paragraph>
         </TouchableOpacity>
-        {currentStepIndex !== steps.length - 1 ? (
+        {currentStepIndex === 0 ? (
           <TouchableOpacity
             style={[styles.buttonStyle(theme), { marginHorizontal: 10 }]}
             onPress={() => setVisible(true)}
           >
-            <Paragraph style={{ margin: 0, padding: 0 }}>Add custom</Paragraph>
+            <Paragraph
+              style={{ margin: 0, padding: 0, color: theme.colors.text }}
+            >
+              Add custom
+            </Paragraph>
           </TouchableOpacity>
         ) : (
           <View style={{ width: 10 }} />
@@ -71,7 +76,7 @@ const CreateWorkout = ({ navigation }) => {
                 currentStepIndex !== steps.length - 1 ? next() : saveWorkout()
               }
             >
-              <Paragraph>
+              <Paragraph style={{ color: theme.colors.text }}>
                 {currentStepIndex !== steps.length - 1 ? "Next" : "Save"}
               </Paragraph>
             </TouchableOpacity>

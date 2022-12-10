@@ -8,8 +8,11 @@ import { Observer } from "mobx-react";
 import WorkoutCard from "./WorkoutCard";
 
 import exerciseStore from "../../store/exerciseStore";
+import { useTheme } from "@react-navigation/native";
 
 const UpdateExercises = () => {
+  const theme = useTheme();
+
   return (
     <>
       <View
@@ -19,7 +22,9 @@ const UpdateExercises = () => {
           alignItems: "center",
         }}
       >
-        <Headline>Enter sets/reps</Headline>
+        <Headline style={{ color: theme.colors.text }}>
+          Enter sets/reps
+        </Headline>
       </View>
       {exerciseStore.exercises.length === 0 && (
         <Observer>
@@ -36,7 +41,9 @@ const UpdateExercises = () => {
                 style={{ width: "75%" }}
                 source={require("../../assets/lottie-animations/29951-healthy-lifestyle-exercise.json")}
               />
-              <Text style={{ fontSize: 20 }}>No exercises added</Text>
+              <Text style={{ fontSize: 20, color: theme.colors.text }}>
+                No exercises added
+              </Text>
             </View>
           )}
         </Observer>

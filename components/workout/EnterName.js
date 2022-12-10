@@ -10,7 +10,9 @@ const EnterName = (props) => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Headline>Enter workout name</Headline>
+      <Headline style={{ color: theme.colors.text }}>
+        Enter workout name
+      </Headline>
       <TextInput
         placeholder={props.placeholder}
         placeholderTextColor={theme.dark ? "#FFFFFF60" : "#00000050"}
