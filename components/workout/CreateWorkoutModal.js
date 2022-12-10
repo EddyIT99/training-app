@@ -55,6 +55,7 @@ const CreateWorkoutModal = ({ visible, setVisible, setSnackbarVisible }) => {
         exerciseStore.updateImage("");
       }}
       overlayStyle={styles.overlayStyle(theme)}
+      backdropStyle={{ backgroundColor: "#00000098" }}
       fullScreen={false}
       animationType={"fade"}
     >
@@ -68,7 +69,7 @@ export default CreateWorkoutModal;
 const styles = StyleSheet.create({
   overlayStyle: (theme) => {
     return {
-      borderRadius: 5,
+      borderRadius: 10,
       padding: 12,
       width: "70%",
       backgroundColor: theme.colors.card,
